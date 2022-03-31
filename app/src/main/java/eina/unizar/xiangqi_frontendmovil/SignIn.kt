@@ -8,10 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SignIn : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,22 +31,27 @@ class SignIn : AppCompatActivity() {
         register.isEnabled = false
         forgottenPass.isEnabled = false
 
+        val context = this  // Save activity context to launch intents
+
         // Send HTTP login request
-        val req = runBlocking { HttpHandler.makeLoginRequest(email = email.editText?.text.toString(),
-                                               password = password.editText?.text.toString())}
-        if (req) {
-            // If successful, launch main menu
-            val i = Intent(this, Home::class.java)
-            startActivity(i)
-        }
-        else {
-            // If errored, re-enable interactivity and highlight editText boxes
-            password.error= "E-mail o contraseña incorrectos"
-            email.isEnabled = true
-            password.isEnabled = true
-            login.isEnabled = true
-            register.isEnabled = true
-            forgottenPass.isEnabled = true
+        MainScope().launch {
+            val req = HttpHandler.makeLoginRequest(email = email.editText?.text.toString(),
+                password = password.editText?.text.toString())
+            if (req) {
+                // If successful, launch main menu
+                val i = Intent(context, Home::class.java)
+                startActivity(i)
+                //finish()
+            }
+            else {
+                // If errored, re-enable interactivity and highlight editText boxes
+                password.error = "E-mail o contraseña incorrectos"
+                email.isEnabled = true
+                password.isEnabled = true
+                login.isEnabled = true
+                register.isEnabled = true
+                forgottenPass.isEnabled = true
+            }
         }
     }
 
