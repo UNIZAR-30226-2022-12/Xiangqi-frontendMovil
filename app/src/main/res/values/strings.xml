@@ -5,4 +5,5 @@
     <string name="signin_login_button">Iniciar sesion</string>
     <string name="signin_register_button">Registrar</string>
     <string name="signin_forgotten_pass">¿Has olvidado tu contraseña?</string>
+    <string name="home_profile">Perfil</string>
 </resources>

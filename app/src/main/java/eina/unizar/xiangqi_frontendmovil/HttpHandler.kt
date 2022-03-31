@@ -7,19 +7,18 @@ import java.net.URL
 
 class HttpHandler {
     companion object {
-        private const val login_url = "https://ptsv2.com/t/rcrml-1647992436/post"
+        private const val login_url = "https://httpdump.io/c7wdy"
 
         suspend fun makeLoginRequest(email: String, password: String): Boolean {
             return withContext(Dispatchers.IO) {
                 val url = URL(login_url)
-                (url.openConnection() as? HttpURLConnection)?.run {
-                    requestMethod = "POST"
-                    setRequestProperty("Content-Type", "application/x-www-form-urlencoded; utf-8")
-                    doOutput = true
-                    outputStream.write(("email=$email&pwd=$password").toByteArray())
-                    return@withContext true
-                }
-                return@withContext false
+                val conn: HttpURLConnection = url.openConnection() as HttpURLConnection
+                conn.requestMethod = "POST"
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; utf-8")
+                conn.doOutput = true
+                conn.outputStream.write(("email=$email&pwd=$password").toByteArray())
+                conn.connect()
+                return@withContext conn.inputStream != null
             }
         }
     }

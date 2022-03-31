@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.XiangqifrontendMovil">
         <activity
+            android:name=".Profile"
+            android:exported="false"/>
+        <activity
             android:name=".Home"
             android:exported="false"/>
         <activity
