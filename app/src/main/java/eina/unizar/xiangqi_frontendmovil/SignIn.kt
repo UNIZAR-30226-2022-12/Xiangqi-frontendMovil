@@ -1,23 +1,74 @@
 package eina.unizar.xiangqi_frontendmovil
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+
 
 class SignIn : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
+
+        val email: TextInputLayout = findViewById(R.id.editTextEmail)
+        email.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                email.error = ""
+            }
+        })
+
+        val password: TextInputLayout = findViewById(R.id.editTextPassword)
+        password.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                password.error = ""
+            }
+        })
+    }
+
+    private fun checkFormData(): Boolean {
+        val email: TextInputLayout = findViewById(R.id.editTextEmail)
+        val password: TextInputLayout = findViewById(R.id.editTextPassword)
+        val emailText: String = email.editText?.text.toString()
+        val passwordText: String = password.editText?.text.toString()
+
+        var ok = true
+        if (emailText == "") {
+            email.error = "Por favor, indique su correo"
+            ok = false
+        }
+        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+            email.error = "El correo introducido no es válido"
+            ok = false
+        }
+        if (passwordText == "") {
+            password.error = "Por favor, especifique una contraseña"
+            ok = false
+        }
+
+        return ok
     }
 
     fun onClickLogin(view: View) {
+        // Validate data
+        if (!checkFormData()) return
+
         // Disable interactivity while making the request
         val email: TextInputLayout = findViewById(R.id.editTextEmail)
         val password: TextInputLayout = findViewById(R.id.editTextPassword)
@@ -35,7 +86,7 @@ class SignIn : AppCompatActivity() {
 
         // Send HTTP login request
         MainScope().launch {
-            val req = HttpHandler.makeLoginRequest(email = email.editText?.text.toString(),
+            val req = HttpHandler.makeJsonLoginRequest(email = email.editText?.text.toString(),
                 password = password.editText?.text.toString())
             if (req) {
                 // If successful, launch main menu

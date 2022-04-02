@@ -38,7 +38,8 @@
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@+id/editTextEmail"
         app:layout_constraintStart_toStartOf="@+id/editTextEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail">
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -48,6 +49,7 @@
             android:inputType="textPassword"
             android:textColorHint="#78909C"
             android:textSize="21sp"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
