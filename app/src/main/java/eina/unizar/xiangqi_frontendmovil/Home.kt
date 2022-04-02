@@ -11,8 +11,14 @@ class Home : AppCompatActivity() {
         setContentView(R.layout.activity_home)
     }
 
-    fun onClickProfile(view: View) {
+    fun profileButton(view: View) {
         val i = Intent(this, Profile::class.java)
-        startActivity(i)
-    }
+        startActivity(i)}
+
+    fun friendButton(view: View) {}
+    fun playButton(view: View) {}
+    fun rankingButton(view: View) {}
+    fun shopButton(view: View) {}
+    fun historyButton(view: View) {}
+    fun skinButton(view: View) {}
 }

@@ -86,9 +86,14 @@ class SignIn : AppCompatActivity() {
 
         // Send HTTP login request
         MainScope().launch {
-            val req = HttpHandler.makeJsonLoginRequest(email = email.editText?.text.toString(),
+            val req = HttpHandler.makeLoginRequest(email = email.editText?.text.toString(),
                 password = password.editText?.text.toString())
-            if (req) {
+            email.isEnabled = true
+            password.isEnabled = true
+            login.isEnabled = true
+            register.isEnabled = true
+            forgottenPass.isEnabled = true
+            if (req != "") {
                 // If successful, launch main menu
                 val i = Intent(context, Home::class.java)
                 startActivity(i)
@@ -97,11 +102,6 @@ class SignIn : AppCompatActivity() {
             else {
                 // If errored, re-enable interactivity and highlight editText boxes
                 password.error = "E-mail o contraseña incorrectos"
-                email.isEnabled = true
-                password.isEnabled = true
-                login.isEnabled = true
-                register.isEnabled = true
-                forgottenPass.isEnabled = true
             }
         }
     }

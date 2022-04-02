@@ -3,7 +3,17 @@
     <string name="signin_email">E-mail</string>
     <string name="signin_pass">Contraseña</string>
     <string name="signin_login_button">Iniciar sesion</string>
-    <string name="signin_register_button">Registrar</string>
+    <string name="signin_register_button">Registrarse</string>
     <string name="signin_forgotten_pass">¿Has olvidado tu contraseña?</string>
-    <string name="home_profile">Perfil</string>
+    <string name="signup_nickname">Nombre de usuario</string>
+    <string name="signup_realname">Nombre completo</string>
+    <string name="signup_repass">Confirmar contraseña</string>
+    <string name="signup_account">Crear cuenta</string>
+    <string name="profile">Perfil</string>
+    <string name="friends">Amigos</string>
+    <string name="play">Jugar</string>
+    <string name="ranking">Ranking</string>
+    <string name="shop">Tienda</string>
+    <string name="history">Historial</string>
+    <string name="skin">Aspecto</string>
 </resources>
