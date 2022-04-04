@@ -2,20 +2,24 @@ package eina.unizar.xiangqi_frontendmovil
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.URL
 
-
 class HttpHandler {
-    companion object {
-        // TODO: save session token and user id
-        private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
+    data class LoginRequest(val email: String, val pwd: String)
+    data class LoginResponse(val exist: Boolean, val ok: Boolean, val validacion: Boolean,
+                             val error: Boolean)
 
-        // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeLoginRequest(email: String, password: String): String {
+    companion object {
+        private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
+        private var token = ""
+        private var id = -1
+
+        suspend fun makeLoginRequest(request: LoginRequest): LoginResponse {
             return withContext(Dispatchers.IO) {
                 try{
                     val conn: HttpURLConnection = URL("$base_url/do-login").openConnection() as HttpURLConnection
@@ -23,22 +27,29 @@ class HttpHandler {
                     conn.setRequestProperty("Content-Type", "application/json; utf-8")
                     conn.connectTimeout = 5000
                     conn.doOutput = true
-                    conn.outputStream.write(("{\"email\":\"$email\", " +
-                                             "\"pwd\":\"$password\"}")
+                    conn.outputStream.write(("{\"email\":\"${request.email}\", " +
+                                             "\"pwd\":\"${request.pwd}\"}")
                                             .toByteArray())
                     conn.connect()
-                    // TODO: parse response body
-                    val ret = conn.inputStream != null
-                    if (ret) return@withContext BufferedReader(conn.inputStream.reader()).readText()//Log.d("HTTP", BufferedReader(conn.inputStream.reader()).readText())
-                    else return@withContext "Conn failed"
+                    val parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
+                    val response = LoginResponse(parser.getBoolean("exist"),
+                        parser.getBoolean("ok"),
+                        parser.getBoolean("validacion"),
+                        false)
+                    if (response.exist and response.ok and response.validacion) {
+                        token = parser.getString("token")
+                        id = parser.getInt("id")
+                    }
+                    return@withContext response
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
-                    return@withContext "TimeoutException"
+                    return@withContext LoginResponse(false, false, false, true)
                 }
                 catch (e: IOException) {
                     // Url not found
-                    return@withContext "IOException"
+                    e.printStackTrace()
+                    return@withContext LoginResponse(false, false, false, true)
                 }
             }
         }

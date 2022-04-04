@@ -14,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 
-
 class SignUp : AppCompatActivity() {
     private var image: Bitmap? = null
     private val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->

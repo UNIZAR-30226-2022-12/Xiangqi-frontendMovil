@@ -13,12 +13,12 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-
 class SignIn : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
+        // Add listeners to remove editText error messages after editing them
         val email: TextInputLayout = findViewById(R.id.editTextEmail)
         email.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -85,23 +85,32 @@ class SignIn : AppCompatActivity() {
         val context = this  // Save activity context to launch intents
 
         // Send HTTP login request
+        val request = HttpHandler.LoginRequest(email.editText?.text.toString(),
+            password.editText?.text.toString())
         MainScope().launch {
-            val req = HttpHandler.makeLoginRequest(email = email.editText?.text.toString(),
-                password = password.editText?.text.toString())
+            val response = HttpHandler.makeLoginRequest(request)
             email.isEnabled = true
             password.isEnabled = true
             login.isEnabled = true
             register.isEnabled = true
             forgottenPass.isEnabled = true
-            if (req != "") {
+            if (response.exist and response.ok and response.validacion) {
                 // If successful, launch main menu
                 val i = Intent(context, Home::class.java)
                 startActivity(i)
-                //finish()
+                finish()
             }
-            else {
-                // If errored, re-enable interactivity and highlight editText boxes
-                password.error = "E-mail o contraseña incorrectos"
+            else if (response.error) {
+                Toast.makeText(context, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show()
+            }
+            else if (!response.exist) {
+                email.error = "E-mail no registrado"
+            }
+            else if (!response.validacion) {
+                password.error = "Cuenta no validada, revise su correo electrónico"
+            }
+            else if (!response.ok) {
+                password.error = "Contraseña incorrecta"
             }
         }
     }
@@ -112,6 +121,6 @@ class SignIn : AppCompatActivity() {
     }
 
     fun onClickForgottenPass(view: View) {
-        Toast.makeText(this, "TODO", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
     }
 }
