@@ -1,7 +1,10 @@
 package eina.unizar.xiangqi_frontendmovil
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.util.Base64
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -18,7 +21,8 @@ class HttpHandler {
                              val error: Boolean)
     data class RegisterRequest(val nickname: String, val realname: String, val email: String,
                                val pwd: String, val birthdate: String, val country: String,
-                               val code: String, val image: Uri?)
+                               val code: String, val image: Uri)
+    data class RegisterResponse(val success: Boolean, val error: Boolean)
 
     companion object {
         private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
@@ -54,49 +58,47 @@ class HttpHandler {
                 }
                 catch (e: IOException) {
                     // Url not found
-                    e.printStackTrace()
                     return@withContext LoginResponse(false, false, false, true)
                 }
             }
         }
 
-        // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeRegisterRequest(request: RegisterRequest): String {
+        suspend fun makeRegisterRequest(request: RegisterRequest, context: Context): RegisterResponse {
             return withContext(Dispatchers.IO) {
                 try{
-                    val conn: HttpURLConnection = URL("http://httpdump.io/at_26"/*"$base_url/do-create"*/).openConnection() as HttpURLConnection
+                    val conn: HttpURLConnection = URL("$base_url/do-create").openConnection() as HttpURLConnection
                     conn.requestMethod = "POST"
                     conn.setRequestProperty("Content-Type", "application/json; utf-8")
                     conn.connectTimeout = 5000
                     conn.doOutput = true
 
-                    /*val bmp = Bitmap.createBitmap(IntArray(4), 2, 2, Bitmap.Config.ARGB_8888)
+                    //val bmp = Bitmap.createBitmap(IntArray(4), 2, 2, Bitmap.Config.ARGB_8888)
+                    val bmp = ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, request.image))
                     val stream = ByteArrayOutputStream()
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)*/
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                    val bmpStr = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP)
+
+                    val dateList = request.birthdate.split("/")
 
                     conn.outputStream.write(("{\"nickname\":\"${request.nickname}\", " +
                             "\"name\":\"${request.realname}\", " +
                             "\"email\":\"${request.email}\", " +
-                            "\"date\":\"${request.birthdate}\", " +
-                            "\"country\":{\"code\":\"${request.code}\", \"name\":\"${request.country}\"}" +
-                            "\"pwd\":\"${request.pwd}\", " +
-                            "\"image\":\"png\"}")
+                            "\"image\":\"${bmpStr}\", " +
+                            "\"date\":\"${dateList[2]}-${dateList[0]}-${dateList[1]} 00:00\", " +
+                            "\"country\":{\"code\":\"${request.code}\", \"name\":\"${request.country}\"}, " +
+                            "\"pwd\":\"${request.pwd}\"}")
                             .toByteArray())
                     conn.connect()
-                    // TODO: parse response body
-                    val ret = conn.inputStream != null
-                    if (ret) return@withContext BufferedReader(conn.inputStream.reader()).readText()
-                    else return@withContext "Conn failed"
+                    val response = BufferedReader(conn.inputStream.reader()).readText().toBooleanStrict()
+                    return@withContext RegisterResponse(response, false)
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
-                    e.printStackTrace()
-                    return@withContext "Timeout Exception"
+                    return@withContext RegisterResponse(false, true)
                 }
                 catch (e: IOException) {
                     // Url not found
-                    e.printStackTrace()
-                    return@withContext "IO Exception"
+                    return@withContext RegisterResponse(false, true)
                 }
             }
         }

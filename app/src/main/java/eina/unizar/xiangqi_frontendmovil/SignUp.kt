@@ -286,30 +286,28 @@ class SignUp : AppCompatActivity() {
             codeList[countryList.indexOf(country.editText?.text.toString())],
             imageUri)
         MainScope().launch {
-            val response = HttpHandler.makeRegisterRequest(request)
-            /*email.isEnabled = true
+            val response = HttpHandler.makeRegisterRequest(request, context)
+            nickname.isEnabled = true
+            realname.isEnabled = true
+            email.isEnabled = true
+            birthdate.isEnabled = true
+            country.isEnabled = true
+            image.isEnabled = true
             password.isEnabled = true
-            login.isEnabled = true
+            repassword.isEnabled = true
+            eula.isEnabled = true
             register.isEnabled = true
-            forgottenPass.isEnabled = true
-            if (response.exist and response.ok and response.validacion) {
-                // If successful, launch main menu
-                val i = Intent(context, Home::class.java)
-                startActivity(i)
+            if (response.success) {
+                Toast.makeText(context, "Cuenta creada correctamente. Revise su email para verificarla.", Toast.LENGTH_LONG).show()
                 finish()
             }
             else if (response.error) {
                 Toast.makeText(context, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show()
             }
-            else if (!response.exist) {
-                email.error = "E-mail no registrado"
+            else if (!response.success) {
+                email.error = "El correo introducido ya existe"
+                Toast.makeText(context, "El correo introducido ya existe", Toast.LENGTH_SHORT).show()
             }
-            else if (!response.validacion) {
-                password.error = "Cuenta no validada, revise su correo electrónico"
-            }
-            else if (!response.ok) {
-                password.error = "Contraseña incorrecta"
-            }*/
         }
     }
 }
