@@ -1,9 +1,12 @@
 package eina.unizar.xiangqi_frontendmovil
 
+import android.graphics.Bitmap
+import android.net.Uri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
@@ -13,6 +16,9 @@ class HttpHandler {
     data class LoginRequest(val email: String, val pwd: String)
     data class LoginResponse(val exist: Boolean, val ok: Boolean, val validacion: Boolean,
                              val error: Boolean)
+    data class RegisterRequest(val nickname: String, val realname: String, val email: String,
+                               val pwd: String, val birthdate: String, val country: String,
+                               val code: String, val image: Uri?)
 
     companion object {
         private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
@@ -55,24 +61,26 @@ class HttpHandler {
         }
 
         // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeRegisterRequest(nickname: String, name: String, email: String, password: String,
-                                        date: String, code: String, country: String): String {
+        suspend fun makeRegisterRequest(request: RegisterRequest): String {
             return withContext(Dispatchers.IO) {
                 try{
-                    val conn: HttpURLConnection = URL("$base_url/do-create").openConnection() as HttpURLConnection
+                    val conn: HttpURLConnection = URL("http://httpdump.io/at_26"/*"$base_url/do-create"*/).openConnection() as HttpURLConnection
                     conn.requestMethod = "POST"
                     conn.setRequestProperty("Content-Type", "application/json; utf-8")
                     conn.connectTimeout = 5000
                     conn.doOutput = true
 
-                    // TODO: inject image as byte array, and pass country from getCountries request
-                    conn.outputStream.write(("{\"nickname\":\"$nickname\", " +
-                            "\"name\":\"$name\", " +
-                            "\"email\":\"$email\", " +
-                            "\"date\":\"$date\", " +
-                            "\"country\":{\"code\":\"AD\", \"name\":\"Andorra\"}" +
-                            "\"pwd\":\"$password\", " +
-                            "\"image\":\"a\"}")
+                    /*val bmp = Bitmap.createBitmap(IntArray(4), 2, 2, Bitmap.Config.ARGB_8888)
+                    val stream = ByteArrayOutputStream()
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)*/
+
+                    conn.outputStream.write(("{\"nickname\":\"${request.nickname}\", " +
+                            "\"name\":\"${request.realname}\", " +
+                            "\"email\":\"${request.email}\", " +
+                            "\"date\":\"${request.birthdate}\", " +
+                            "\"country\":{\"code\":\"${request.code}\", \"name\":\"${request.country}\"}" +
+                            "\"pwd\":\"${request.pwd}\", " +
+                            "\"image\":\"png\"}")
                             .toByteArray())
                     conn.connect()
                     // TODO: parse response body
@@ -82,10 +90,12 @@ class HttpHandler {
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
+                    e.printStackTrace()
                     return@withContext "Timeout Exception"
                 }
                 catch (e: IOException) {
                     // Url not found
+                    e.printStackTrace()
                     return@withContext "IO Exception"
                 }
             }

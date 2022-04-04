@@ -43,12 +43,11 @@ class SignIn : AppCompatActivity() {
     }
 
     private fun checkFormData(): Boolean {
-        val email: TextInputLayout = findViewById(R.id.editTextEmail)
-        val password: TextInputLayout = findViewById(R.id.editTextPassword)
-        val emailText: String = email.editText?.text.toString()
-        val passwordText: String = password.editText?.text.toString()
-
         var ok = true
+
+        // Check email field
+        val email: TextInputLayout = findViewById(R.id.editTextEmail)
+        val emailText: String = email.editText?.text.toString()
         if (emailText == "") {
             email.error = "Por favor, indique su correo"
             ok = false
@@ -57,7 +56,10 @@ class SignIn : AppCompatActivity() {
             email.error = "El correo introducido no es válido"
             ok = false
         }
-        if (passwordText == "") {
+
+        // Check password field
+        val password: TextInputLayout = findViewById(R.id.editTextPassword)
+        if (password.editText?.text.toString() == "") {
             password.error = "Por favor, especifique una contraseña"
             ok = false
         }
@@ -75,6 +77,7 @@ class SignIn : AppCompatActivity() {
         val login: Button = findViewById(R.id.buttonLogin)
         val register: Button = findViewById(R.id.buttonRegister)
         val forgottenPass: TextView = findViewById(R.id.textViewForgottenPass)
+        email.error = ""
         password.error = ""
         email.isEnabled = false
         password.isEnabled = false

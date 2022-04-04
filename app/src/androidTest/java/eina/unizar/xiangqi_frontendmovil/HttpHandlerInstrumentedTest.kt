@@ -56,10 +56,17 @@ class HttpHandlerInstrumentedTest {
 
     @Test
     fun makeRegisterTest() {
-        val ret = runBlocking { HttpHandler.makeRegisterRequest("jb", "Jaime",
-            "csscmmbsieotmewiyq@kvhrs.com", "princess", "01/01/2000", "75",
-            "España") }
-        assertEquals("Test", ret)
+        val response = runBlocking { HttpHandler.makeRegisterRequest(HttpHandler.RegisterRequest(
+            "android",
+            "android",
+            "android@test.com",
+            "ABcdef12",
+            "03/04/2000",
+            "Spain",
+            "ES",
+            null
+        )) }
+        assertEquals("Test", response)
     }
 
     @Test
