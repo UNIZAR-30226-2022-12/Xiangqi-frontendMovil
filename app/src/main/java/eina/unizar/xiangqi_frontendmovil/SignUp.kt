@@ -162,8 +162,12 @@ class SignUp : AppCompatActivity() {
 
         // Check nickname field
         val nickname: TextInputLayout = findViewById(R.id.editTextNickname)
-        if (nickname.editText?.text.toString() == "") {
+        val nicknameText: String = nickname.editText?.text.toString()
+        if (nicknameText == "") {
             nickname.error = "Por favor, indique un nombre de usuario"
+            ok = false
+        } else if (nicknameText.length > 15) {
+            nickname.error = "El nombre de usuario no puede tener más de 15 caracteres"
             ok = false
         }
 
