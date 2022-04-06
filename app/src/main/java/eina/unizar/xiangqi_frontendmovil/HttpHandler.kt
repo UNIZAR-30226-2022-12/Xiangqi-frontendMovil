@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Base64
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -21,8 +22,13 @@ class HttpHandler {
                              val error: Boolean)
     data class RegisterRequest(val nickname: String, val realname: String, val email: String,
                                val pwd: String, val birthdate: String, val country: String,
-                               val code: String, val image: Uri)
+                               val code: String, val image: Uri?)
     data class RegisterResponse(val success: Boolean, val error: Boolean)
+    data class ForgottenPassRequest(val email: String)
+    data class ForgottenPassResponse(val success: Boolean, val error: Boolean)
+    data class ValidationRequest(val email: String)
+    data class ValidationResponse(val success: Boolean, val error: Boolean)
+    data class DeletionResponse(val success: Boolean, val error: Boolean)
 
     companion object {
         private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
@@ -72,8 +78,9 @@ class HttpHandler {
                     conn.connectTimeout = 5000
                     conn.doOutput = true
 
-                    //val bmp = Bitmap.createBitmap(IntArray(4), 2, 2, Bitmap.Config.ARGB_8888)
-                    val bmp = ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, request.image))
+                    val bmp: Bitmap
+                    if (request.image == null) bmp = Bitmap.createBitmap(IntArray(4), 2, 2, Bitmap.Config.ARGB_8888)
+                    else bmp = ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, request.image))
                     val stream = ByteArrayOutputStream()
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
                     val bmpStr = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP)
@@ -99,6 +106,77 @@ class HttpHandler {
                 catch (e: IOException) {
                     // Url not found
                     return@withContext RegisterResponse(false, true)
+                }
+            }
+        }
+
+        suspend fun makeForgottenPassRequest(request: ForgottenPassRequest): ForgottenPassResponse {
+            return withContext(Dispatchers.IO) {
+                try{
+                    val conn: HttpURLConnection = URL("$base_url/do-forgotPwd").openConnection() as HttpURLConnection
+                    conn.requestMethod = "POST"
+                    conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                    conn.connectTimeout = 5000
+                    conn.doOutput = true
+                    conn.outputStream.write(("{\"email\":\"${request.email}\"}").toByteArray())
+                    conn.connect()
+                    val response = BufferedReader(conn.inputStream.reader()).readText().toBooleanStrict()
+                    return@withContext ForgottenPassResponse(response, false)
+                }
+                catch (e: SocketTimeoutException) {
+                    // Timeout msg
+                    return@withContext ForgottenPassResponse(false, true)
+                }
+                catch (e: IOException) {
+                    // Url not found
+                    return@withContext ForgottenPassResponse(false, true)
+                }
+            }
+        }
+
+        suspend fun makeValidationRequest(request: ValidationRequest): ValidationResponse {
+            return withContext(Dispatchers.IO) {
+                try{
+                    val conn: HttpURLConnection = URL("$base_url/do-validate").openConnection() as HttpURLConnection
+                    conn.requestMethod = "POST"
+                    conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                    conn.connectTimeout = 5000
+                    conn.doOutput = true
+                    conn.outputStream.write(("{\"email\":\"${request.email}\"}").toByteArray())
+                    conn.connect()
+                    val response = BufferedReader(conn.inputStream.reader()).readText().toBooleanStrict()
+                    return@withContext ValidationResponse(response, false)
+                }
+                catch (e: SocketTimeoutException) {
+                    // Timeout msg
+                    return@withContext ValidationResponse(false, true)
+                }
+                catch (e: IOException) {
+                    // Url not found
+                    return@withContext ValidationResponse(false, true)
+                }
+            }
+        }
+
+        suspend fun makeDeletionRequest(): DeletionResponse {
+            return withContext(Dispatchers.IO) {
+                try{
+                    val conn: HttpURLConnection = URL("$base_url/do-deleteAccount").openConnection() as HttpURLConnection
+                    conn.requestMethod = "GET"
+                    conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                    conn.setRequestProperty("x-access-token", token)
+                    conn.connectTimeout = 5000
+                    conn.connect()
+                    val response = BufferedReader(conn.inputStream.reader()).readText().toBooleanStrict()
+                    return@withContext DeletionResponse(response, false)
+                }
+                catch (e: SocketTimeoutException) {
+                    // Timeout msg
+                    return@withContext DeletionResponse(false, true)
+                }
+                catch (e: IOException) {
+                    // Url not found
+                    return@withContext DeletionResponse(false, true)
                 }
             }
         }
@@ -131,7 +209,7 @@ class HttpHandler {
         }
 
         // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeCountriesRequest(id: String): String {
+        suspend fun makeCountriesRequest(): String {
             return withContext(Dispatchers.IO) {
                 try{
                     val conn: HttpURLConnection = URL("$base_url/do-getCountries").openConnection() as HttpURLConnection

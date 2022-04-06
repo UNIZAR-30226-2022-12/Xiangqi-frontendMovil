@@ -5,6 +5,8 @@
     <string name="signin_login_button">Iniciar sesión</string>
     <string name="signin_register_button">Registrarse</string>
     <string name="signin_forgotten_pass">¿Has olvidado tu contraseña?</string>
+    <string name="forgotten_pass_instructions">Introduce tu correo electrónico y te mandaremos las instrucciones necesarias para recuperar tu contraseña.</string>
+    <string name="forgotten_pass_recovery_button">Recuperar contraseña</string>
     <string name="signup_nickname">Nombre de usuario</string>
     <string name="signup_realname">Nombre completo</string>
     <string name="signup_birthdate">Fecha de nacimiento</string>

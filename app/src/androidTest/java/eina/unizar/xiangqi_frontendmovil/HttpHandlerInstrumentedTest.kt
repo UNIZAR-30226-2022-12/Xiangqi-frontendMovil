@@ -1,6 +1,7 @@
 package eina.unizar.xiangqi_frontendmovil
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.runBlocking
 
 import org.junit.Test
@@ -37,16 +38,16 @@ class HttpHandlerInstrumentedTest {
 
         // Test incorrect password
         response = runBlocking { HttpHandler.makeLoginRequest(HttpHandler.LoginRequest(
-            "sosem84191@nuesond.com",
+            "android@test.com",
             "1234")) }
         assert(!response.error)
         assert(response.exist)
         assert(response.validacion)
         assert(!response.ok)
 
-        // Test unvalidated account
+        // Test validated account
         response = runBlocking { HttpHandler.makeLoginRequest(HttpHandler.LoginRequest(
-            "sosem84191@nuesond.com",
+            "android@test.com",
             "ABcdef12")) }
         assert(!response.error)
         assert(response.exist)
@@ -56,17 +57,74 @@ class HttpHandlerInstrumentedTest {
 
     @Test
     fun makeRegisterTest() {
-        /*val response = runBlocking { HttpHandler.makeRegisterRequest(HttpHandler.RegisterRequest(
+        // Test unregistered email
+        var response = runBlocking { HttpHandler.makeRegisterRequest(HttpHandler.RegisterRequest(
             "android",
             "android",
-            "android@test.com",
+            "movil@test.com",
             "ABcdef12",
             "03/04/2000",
             "Spain",
             "ES",
             null
-        )) }
-        assertEquals("Test", response)*/
+        ), InstrumentationRegistry.getInstrumentation().context) }
+        assert(!response.error)
+        assert(response.success)
+
+        // Test registered email
+        response = runBlocking { HttpHandler.makeRegisterRequest(HttpHandler.RegisterRequest(
+            "android",
+            "android",
+            "movil@test.com",
+            "ABcdef12",
+            "03/04/2000",
+            "Spain",
+            "ES",
+            null
+        ), InstrumentationRegistry.getInstrumentation().context) }
+        assert(!response.error)
+        assert(!response.success)
+    }
+
+    @Test
+    fun makeForgottenPassTest() {
+        // Test existing account
+        var response = runBlocking { HttpHandler.makeForgottenPassRequest(HttpHandler.ForgottenPassRequest(
+            "a@b.com")) }
+        assert(!response.error)
+        assert(!response.success)
+
+        // Test existing account
+        response = runBlocking { HttpHandler.makeForgottenPassRequest(HttpHandler.ForgottenPassRequest(
+            "android@test.com")) }
+        assert(!response.error)
+        assert(response.success)
+    }
+
+    @Test
+    fun makeValidationTest() {
+        // Test existing account
+        val response = runBlocking { HttpHandler.makeValidationRequest(HttpHandler.ValidationRequest(
+            "android@test.com")) }
+        assert(!response.error)
+        assert(response.success)
+    }
+
+    @Test
+    fun makeDeletionTest() {
+        // Log into validated account
+        val login = runBlocking { HttpHandler.makeLoginRequest(HttpHandler.LoginRequest(
+            "android@test.com",
+            "ABcdef12")) }
+        assert(!login.error)
+        assert(login.exist)
+        assert(login.validacion)
+        assert(login.ok)
+
+        // Test deletion
+        val response = runBlocking { HttpHandler.makeDeletionRequest() }
+        assert(!response.error)
+        assert(response.success)
     }
 
     @Test
@@ -77,7 +135,7 @@ class HttpHandlerInstrumentedTest {
 
     @Test
     fun makeCountriesTest() {
-        val ret = runBlocking { HttpHandler.makeCountriesRequest("22") }
+        val ret = runBlocking { HttpHandler.makeCountriesRequest() }
         assertEquals("Test", ret)
     }
 

@@ -1,5 +1,6 @@
 package eina.unizar.xiangqi_frontendmovil
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -14,12 +15,14 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class SignIn : AppCompatActivity() {
+    lateinit var dialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
         // Add listeners to remove editText error messages after editing them
-        val email: TextInputLayout = findViewById(R.id.editTextEmail)
+        var email: TextInputLayout = findViewById(R.id.editTextEmail)
         email.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -38,6 +41,22 @@ class SignIn : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 password.error = ""
+            }
+        })
+
+        // Construct forgotten password dialog
+        dialog = Dialog(this)
+        dialog.setContentView(R.layout.fragment_forgotten_pass)
+
+        // Add listener to remove editText error messages after editing it
+        email = dialog.findViewById(R.id.editTextForgottenEmail)
+        email.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                email.error = ""
             }
         })
     }
@@ -123,7 +142,60 @@ class SignIn : AppCompatActivity() {
         startActivity(i)
     }
 
+    private fun checkForgottenPassData(): Boolean {
+        var ok = true
+
+        // Check email field
+        val email: TextInputLayout = dialog.findViewById(R.id.editTextForgottenEmail)
+        val emailText: String = email.editText?.text.toString()
+        if (emailText == "") {
+            email.error = "Por favor, indique su correo"
+            ok = false
+        }
+        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+            email.error = "El correo introducido no es válido"
+            ok = false
+        }
+
+        return ok
+    }
+
+    fun onClickRecovery(view: View) {
+        if (!checkForgottenPassData()) return
+
+        // Disable interactivity while making the request
+        val email: TextInputLayout = dialog.findViewById(R.id.editTextForgottenEmail)
+        val recovery: Button = dialog.findViewById(R.id.buttonRecovery)
+        email.error = ""
+        email.isEnabled = false
+        recovery.isEnabled = false
+
+        val context = this  // Save activity context to launch intents
+
+        // Send HTTP login request
+        val request = HttpHandler.ForgottenPassRequest(email.editText?.text.toString())
+        MainScope().launch {
+            val response = HttpHandler.makeForgottenPassRequest(request)
+            email.isEnabled = true
+            recovery.isEnabled = true
+            if (response.success) {
+                Toast.makeText(context, "¡Correo enviado correctamente!\n" +
+                        "Por favor, revisa tu correo electrónico y sigue las " +
+                        "instrucciones para recuperar tu contraseña",
+                    Toast.LENGTH_LONG).show()
+                dialog.hide()
+                email.editText?.setText("")
+            }
+            else if (response.error) {
+                Toast.makeText(context, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show()
+            }
+            else if (!response.success) {
+                email.error = "E-mail no registrado"
+            }
+        }
+    }
+
     fun onClickForgottenPass(view: View) {
-        Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
+        dialog.show()
     }
 }
