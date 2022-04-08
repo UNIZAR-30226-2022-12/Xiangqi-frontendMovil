@@ -13,9 +13,14 @@ class Home : AppCompatActivity() {
 
     fun profileButton(view: View) {
         val i = Intent(this, Profile::class.java)
-        startActivity(i)}
+        startActivity(i)
+    }
 
-    fun friendButton(view: View) {}
+    fun friendButton(view: View) {
+        val i = Intent(this, Profile::class.java)
+        i.putExtra("id", 18)
+        startActivity(i)
+    }
     fun playButton(view: View) {}
     fun rankingButton(view: View) {}
     fun shopButton(view: View) {}

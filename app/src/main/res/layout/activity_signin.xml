@@ -55,7 +55,7 @@
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginTop="40dp"
         android:onClick="onClickLogin"
         android:text="@string/signin_login_button"
@@ -67,7 +67,7 @@
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginTop="40dp"
         android:onClick="onClickRegister"
         android:text="@string/signin_register_button"
@@ -81,7 +81,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
         android:clickable="true"
         android:onClick="onClickForgottenPass"
