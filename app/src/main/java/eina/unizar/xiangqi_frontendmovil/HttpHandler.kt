@@ -3,6 +3,7 @@ package eina.unizar.xiangqi_frontendmovil
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Base64
 import android.util.Log
@@ -17,6 +18,7 @@ import java.net.SocketTimeoutException
 import java.net.URL
 
 class HttpHandler {
+
     data class LoginRequest(val email: String, val pwd: String)
     data class LoginResponse(val exist: Boolean, val ok: Boolean, val validacion: Boolean,
                              val error: Boolean)
@@ -215,7 +217,7 @@ class HttpHandler {
         }
 
         // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeImageRequest(user: Int): String {
+        suspend fun makeImageRequest(user: Int): Drawable? {
             return withContext(Dispatchers.IO) {
                 try{
                     val conn: HttpURLConnection
@@ -226,15 +228,16 @@ class HttpHandler {
                     conn.setRequestProperty("x-access-token", token)
                     conn.connectTimeout = 5000
                     conn.connect()
-                    return@withContext BufferedReader(conn.inputStream.reader()).readText()
+                    val d = Drawable.createFromStream(conn.inputStream, "profile")
+                    return@withContext d
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
-                    return@withContext "Timeout Exception"
+                    return@withContext null
                 }
                 catch (e: IOException) {
                     // Url not found
-                    return@withContext "IO Exception"
+                    return@withContext null
                 }
             }
         }

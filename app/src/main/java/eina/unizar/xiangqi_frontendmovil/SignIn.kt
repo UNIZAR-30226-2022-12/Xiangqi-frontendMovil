@@ -1,6 +1,8 @@
 package eina.unizar.xiangqi_frontendmovil
 
+import android.app.AlarmManager
 import android.app.Dialog
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -14,12 +16,29 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
+
 class SignIn : AppCompatActivity() {
     lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
+
+        if (intent.getBooleanExtra("Exit me", false)) {
+            val mStartActivity = Intent(this, SignIn::class.java)
+            val mPendingIntentId = 123456
+            val mPendingIntent = PendingIntent.getActivity(
+                this,
+                mPendingIntentId,
+                mStartActivity,
+                PendingIntent.FLAG_CANCEL_CURRENT
+            )
+            val mgr = this.getSystemService(ALARM_SERVICE) as AlarmManager
+            mgr[AlarmManager.RTC, System.currentTimeMillis() + 100] = mPendingIntent
+            finish()
+            return  // add this to prevent from doing unnecessary stuffs
+        }
+
 
         // Add listeners to remove editText error messages after editing them
         var email: TextInputLayout = findViewById(R.id.editTextEmail)

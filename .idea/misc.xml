@@ -15,6 +15,9 @@
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.309" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.19" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.17325227963525835" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/activity_signin.xml" value="0.2803442028985507" />
       </map>
     </option>
   </component>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextNickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:ems="10"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_USERNAME"
+                android:hint="@string/signup_nickname"
+                android:inputType="text"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextRealname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNickname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_PERSON_NAME"
+                android:hint="@string/signup_realname"
+                android:inputType="textPersonName"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextRealname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_EMAIL_ADDRESS"
+                android:hint="@string/signin_email"
+                android:inputType="textEmailAddress"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextBirthdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_BIRTH_DATE_FULL"
+                android:hint="@string/signup_birthdate"
+                android:inputType="date"
+                android:clickable="true"
+                android:focusable="false"
+                android:onClick="onClickBirthdate"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextCountry"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextBirthdate">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/signup_country"
+                android:inputType="none"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCountry">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_BIRTH_DATE_FULL"
+                android:hint="@string/signup_image"
+                android:inputType="none"
+                android:clickable="true"
+                android:focusable="false"
+                android:onClick="onClickImage"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text="Aceptar"
+            android:textSize="28sp"
+            android:onClick="accept"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextImage"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
