@@ -61,9 +61,9 @@ class HttpHandlerInstrumentedTest {
         var response = runBlocking { HttpHandler.makeRegisterRequest(HttpHandler.RegisterRequest(
             "android",
             "android",
-            "movil@test.com",
+            "android@test.com",
             "ABcdef12",
-            "03/04/2000",
+            "04/03/2000",
             "Spain",
             "ES",
             null
@@ -75,9 +75,9 @@ class HttpHandlerInstrumentedTest {
         response = runBlocking { HttpHandler.makeRegisterRequest(HttpHandler.RegisterRequest(
             "android",
             "android",
-            "movil@test.com",
+            "android@test.com",
             "ABcdef12",
-            "03/04/2000",
+            "04/03/2000",
             "Spain",
             "ES",
             null
@@ -89,13 +89,7 @@ class HttpHandlerInstrumentedTest {
     @Test
     fun makeForgottenPassTest() {
         // Test existing account
-        var response = runBlocking { HttpHandler.makeForgottenPassRequest(HttpHandler.ForgottenPassRequest(
-            "a@b.com")) }
-        assert(!response.error)
-        assert(!response.success)
-
-        // Test existing account
-        response = runBlocking { HttpHandler.makeForgottenPassRequest(HttpHandler.ForgottenPassRequest(
+        val response = runBlocking { HttpHandler.makeForgottenPassRequest(HttpHandler.ForgottenPassRequest(
             "android@test.com")) }
         assert(!response.error)
         assert(response.success)
@@ -149,8 +143,8 @@ class HttpHandlerInstrumentedTest {
 
     @Test
     fun makeCountriesTest() {
-        val ret = runBlocking { HttpHandler.makeCountriesRequest() }
-        assertEquals("Test", ret)
+        val response = runBlocking { HttpHandler.makeCountriesRequest() }
+        assert(!response.error)
     }
 
     @Test

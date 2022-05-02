@@ -1,8 +1,6 @@
 package eina.unizar.xiangqi_frontendmovil
 
 import android.app.Dialog
-import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -19,10 +17,11 @@ import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class SignUp : AppCompatActivity() {
-    private val countryList = listOf("Australia", "Brazil", "China", "Egypt", "France", "Germany",
+    private var countryList = listOf("Australia", "Brazil", "China", "Egypt", "France", "Germany",
         "India", "Japan", "Spain", "United States")
-    private val codeList = listOf("AU", "BR", "CN", "EG", "FR", "DE", "IN", "JP", "ES", "US")
-    private lateinit var imageUri: Uri
+    private var codeList = listOf("AU", "BR", "CN", "EG", "FR", "DE", "IN", "JP", "ES", "US")
+    private var imageUri: Uri? = null
+    private lateinit var dialog: Dialog
     private val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         // Handle the returned Uri
         if (uri != null) {
@@ -43,9 +42,18 @@ class SignUp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        // Set country dropdown menu items
+        // Set default country dropdown menu items
         val country: TextInputLayout = findViewById(R.id.editTextCountry)
-        val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, countryList)
+        val flagOffset = 0x1F1E6
+        val asciiOffset = 0x41
+        var flagList = mutableListOf<String>()
+        for (i in countryList.indices) {
+            val firstChar = Character.codePointAt(codeList[i], 0) - asciiOffset + flagOffset
+            val secondChar = Character.codePointAt(codeList[i], 1) - asciiOffset + flagOffset
+            flagList.add(String(Character.toChars(firstChar)) + String(Character.toChars(secondChar))
+                         + " " + countryList[i])
+        }
+        var adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, flagList)
         (country.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
         // Add listeners to remove editText error messages after editing them
@@ -135,12 +143,35 @@ class SignUp : AppCompatActivity() {
                 repassword.error = ""
             }
         })
+
+        // Fill EULA dialog
+        dialog = Dialog(this)
+        dialog.setContentView(R.layout.fragment_eula)
+        dialog.findViewById<TextView>(R.id.textView).text = Html.fromHtml(resources.getString(R.string.eula), 0)
+
+        // Retrieve country list
+        MainScope().launch {
+            val response = HttpHandler.makeCountriesRequest()
+            if (!response.error) {
+                countryList = response.countryList
+                codeList = response.codeList
+                flagList = mutableListOf()
+                for (i in codeList.indices) {
+                    val firstChar = Character.codePointAt(codeList[i], 0) - asciiOffset + flagOffset
+                    val secondChar = Character.codePointAt(codeList[i], 1) - asciiOffset + flagOffset
+                    flagList.add(String(Character.toChars(firstChar)) + String(Character.toChars(secondChar))
+                            + " " + countryList[i])
+                }
+                adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, flagList)
+                (country.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+            }
+        }
     }
 
     fun onClickBirthdate(view: View) {
         val newFragment = DatePickerFragment.newInstance { _, year, month, day ->
             // +1 because January is zero
-            val selectedDate = "${month+1}/$day/$year"
+            val selectedDate = "$day/${month+1}/$year"
             findViewById<TextInputLayout>(R.id.editTextBirthdate).editText?.setText(selectedDate)
         }
         newFragment.show(supportFragmentManager, "datePicker")
@@ -151,9 +182,6 @@ class SignUp : AppCompatActivity() {
     }
 
     fun onClickEula(view: View) {
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.fragment_eula)
-        dialog.findViewById<TextView>(R.id.textView).text = Html.fromHtml(resources.getString(R.string.eula), 0)
         dialog.show()
     }
 
@@ -201,13 +229,6 @@ class SignUp : AppCompatActivity() {
         val country: TextInputLayout = findViewById(R.id.editTextCountry)
         if (country.editText?.text.toString() == "") {
             country.error = "Por favor, indique su país de residencia"
-            ok = false
-        }
-
-        // Check image field
-        val image: TextInputLayout = findViewById(R.id.editTextImage)
-        if (image.editText?.text.toString() == "") {
-            image.error = "Por favor, seleccione una imagen de perfil"
             ok = false
         }
 
@@ -286,8 +307,8 @@ class SignUp : AppCompatActivity() {
             email.editText?.text.toString(),
             password.editText?.text.toString(),
             birthdate.editText?.text.toString(),
-            country.editText?.text.toString(),
-            codeList[countryList.indexOf(country.editText?.text.toString())],
+            country.editText?.text.toString().substring(5),
+            codeList[countryList.indexOf(country.editText?.text.toString().substring(5))],
             imageUri)
         MainScope().launch {
             val response = HttpHandler.makeRegisterRequest(request, context)

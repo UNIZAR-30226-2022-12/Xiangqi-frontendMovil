@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 
 class SignIn : AppCompatActivity() {
-    lateinit var dialog: Dialog
+    private lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +40,8 @@ class SignIn : AppCompatActivity() {
         }
 
 
-        // Add listeners to remove editText error messages after editing them
-        var email: TextInputLayout = findViewById(R.id.editTextEmail)
+        // Add listeners to remove editText error messages after editing it
+        val email: TextInputLayout = findViewById(R.id.editTextEmail)
         email.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -68,14 +68,14 @@ class SignIn : AppCompatActivity() {
         dialog.setContentView(R.layout.fragment_forgotten_pass)
 
         // Add listener to remove editText error messages after editing it
-        email = dialog.findViewById(R.id.editTextForgottenEmail)
-        email.editText?.addTextChangedListener(object : TextWatcher {
+        val forgottenEmail: TextInputLayout = dialog.findViewById(R.id.editTextForgottenEmail)
+        forgottenEmail.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                email.error = ""
+                forgottenEmail.error = ""
             }
         })
     }
@@ -87,7 +87,7 @@ class SignIn : AppCompatActivity() {
         val email: TextInputLayout = findViewById(R.id.editTextEmail)
         val emailText: String = email.editText?.text.toString()
         if (emailText == "") {
-            email.error = "Por favor, indique su correo"
+            email.error = "Por favor, especifique una dirección de correo electrónico"
             ok = false
         }
         else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {

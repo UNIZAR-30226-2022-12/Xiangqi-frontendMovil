@@ -14,8 +14,9 @@ class DatePickerFragment: DialogFragment() {
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-
-        return DatePickerDialog(requireActivity(), listener, year, month, day)
+        val datePicker = DatePickerDialog(requireActivity(), listener, year, month, day)
+        datePicker.datePicker.maxDate = System.currentTimeMillis()
+        return datePicker
     }
 
     companion object {

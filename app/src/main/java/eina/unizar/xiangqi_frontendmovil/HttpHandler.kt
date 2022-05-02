@@ -9,6 +9,7 @@ import android.util.Base64
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
@@ -33,6 +34,8 @@ class HttpHandler {
     data class DeletionResponse(val success: Boolean, val error: Boolean)
     data class ProfileResponse(val nickname: String, val realname: String, val birthdate: String,
                                val country: String, val error: Boolean)
+    data class CountriesResponse(val countryList: List<String>, val codeList: List<String>,
+                                 val error: Boolean)
 
     companion object {
         private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
@@ -82,12 +85,13 @@ class HttpHandler {
                     conn.connectTimeout = 5000
                     conn.doOutput = true
 
-                    val bmp: Bitmap
-                    if (request.image == null) bmp = Bitmap.createBitmap(IntArray(4), 2, 2, Bitmap.Config.ARGB_8888)
-                    else bmp = ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, request.image))
-                    val stream = ByteArrayOutputStream()
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                    val bmpStr = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP)
+                    var bmpStr = ""
+                    if (request.image != null) {
+                        val bmp = ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, request.image))
+                        val stream = ByteArrayOutputStream()
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        bmpStr = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP)
+                    }
 
                     val dateList = request.birthdate.split("/")
 
@@ -95,7 +99,7 @@ class HttpHandler {
                             "\"name\":\"${request.realname}\", " +
                             "\"email\":\"${request.email}\", " +
                             "\"image\":\"${bmpStr}\", " +
-                            "\"date\":\"${dateList[2]}-${dateList[0]}-${dateList[1]} 00:00\", " +
+                            "\"date\":\"${dateList[2]}-${dateList[1]}-${dateList[0]} 00:00\", " +
                             "\"country\":{\"code\":\"${request.code}\", \"name\":\"${request.country}\"}, " +
                             "\"pwd\":\"${request.pwd}\"}")
                             .toByteArray())
@@ -242,8 +246,7 @@ class HttpHandler {
             }
         }
 
-        // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeCountriesRequest(): String {
+        suspend fun makeCountriesRequest(): CountriesResponse {
             return withContext(Dispatchers.IO) {
                 try{
                     val conn: HttpURLConnection = URL("$base_url/do-getCountries").openConnection() as HttpURLConnection
@@ -251,18 +254,24 @@ class HttpHandler {
                     conn.setRequestProperty("Content-Type", "application/json; utf-8")
                     conn.connectTimeout = 5000
                     conn.connect()
-                    // TODO: parse response body
-                    val ret = conn.inputStream != null
-                    if (ret) return@withContext BufferedReader(conn.inputStream.reader()).readText()
-                    else return@withContext "Conn failed"
+                    val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
+                    val countryList = mutableListOf<String>()
+                    val codeList = mutableListOf<String>()
+                    for (i in 0 until parser.length()) {
+                        val item = parser.getJSONObject(i)
+                        countryList.add(item.getString("name"))
+                        codeList.add(item.getString("code"))
+                    }
+                    val response = CountriesResponse(countryList.toList(), codeList.toList(), false)
+                    return@withContext response
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
-                    return@withContext "Timeout Exception"
+                    return@withContext CountriesResponse(listOf(), listOf(), true)
                 }
                 catch (e: IOException) {
                     // Url not found
-                    return@withContext "IO Exception"
+                    return@withContext CountriesResponse(listOf(), listOf(), true)
                 }
             }
         }
