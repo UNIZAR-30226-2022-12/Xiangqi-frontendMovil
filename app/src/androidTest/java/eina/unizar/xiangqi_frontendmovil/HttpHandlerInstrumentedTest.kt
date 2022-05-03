@@ -125,7 +125,7 @@ class HttpHandlerInstrumentedTest {
     fun makeProfileTest() {
         // Log into validated account
         val login = runBlocking { HttpHandler.makeLoginRequest(HttpHandler.LoginRequest(
-            "android@test.com",
+            "movil@test.com",
             "ABcdef12")) }
         assert(!login.error)
         assert(login.exist)
@@ -133,23 +133,14 @@ class HttpHandlerInstrumentedTest {
         assert(login.ok)
 
         // Get account profile
-        val ret = runBlocking { HttpHandler.makeProfileRequest(-1) }
-        //assertEquals("Test", ret)
-
-        // Get account image
-        val response = runBlocking { HttpHandler.makeImageRequest(-1) }
-        assertEquals("Test", response)
+        val profile = runBlocking { HttpHandler.makeProfileRequest(HttpHandler.ProfileRequest(null)) }
+        assert(!profile.error)
+        assert(profile.image)
     }
 
     @Test
     fun makeCountriesTest() {
         val response = runBlocking { HttpHandler.makeCountriesRequest() }
         assert(!response.error)
-    }
-
-    @Test
-    fun makeImageTest() {
-        //val ret = runBlocking { HttpHandler.makeImageRequest("23") }
-        //assertEquals("Test", ret)
     }
 }

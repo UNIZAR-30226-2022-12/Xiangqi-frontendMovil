@@ -23,4 +23,10 @@
     <string name="home_shop">Tienda</string>
     <string name="home_history">Historial</string>
     <string name="home_skin">Aspecto</string>
+    <string name="profile_loading">Cargando…</string>
+    <string name="profile_birthdate">Fecha de nacimiento:</string>
+    <string name="profile_points">Número de puntos:</string>
+    <string name="profile_ranking">Puesto en ranking:</string>
+    <string name="profile_date">Usuario desde:</string>
+    <string name="profile_friends">Número de amigos:</string>
 </resources>

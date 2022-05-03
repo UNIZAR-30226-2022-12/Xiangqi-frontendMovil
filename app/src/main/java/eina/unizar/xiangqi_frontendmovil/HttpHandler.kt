@@ -32,8 +32,13 @@ class HttpHandler {
     data class ValidationRequest(val email: String)
     data class ValidationResponse(val success: Boolean, val error: Boolean)
     data class DeletionResponse(val success: Boolean, val error: Boolean)
+    data class ProfileRequest(val id: Int?)
     data class ProfileResponse(val nickname: String, val realname: String, val birthdate: String,
-                               val country: String, val error: Boolean)
+                               val country: String, val code: String, val ranking: Int,
+                               val points: Int, val registerdate: String, val friends: Int,
+                               val image: Boolean, val error: Boolean)
+    data class ImageRequest(val id: Int?)
+    data class ImageResponse(val image: Drawable?, val error: Boolean)
     data class CountriesResponse(val countryList: List<String>, val codeList: List<String>,
                                  val error: Boolean)
 
@@ -189,59 +194,66 @@ class HttpHandler {
             }
         }
 
-        // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeProfileRequest(user: Int): ProfileResponse {
+        suspend fun makeProfileRequest(request: ProfileRequest): ProfileResponse {
             return withContext(Dispatchers.IO) {
                 try{
                     val conn: HttpURLConnection
-                    if (user == -1) conn = URL("$base_url/do-getProfile/$id").openConnection() as HttpURLConnection
-                    else conn = URL("$base_url/do-getProfile/$user").openConnection() as HttpURLConnection
+                    if (request.id == null) conn = URL("$base_url/do-getProfile/$id").openConnection() as HttpURLConnection
+                    else conn = URL("$base_url/do-getProfile/${request.id}").openConnection() as HttpURLConnection
                     conn.requestMethod = "GET"
                     conn.setRequestProperty("Content-Type", "application/json; utf-8")
                     conn.setRequestProperty("x-access-token", token)
                     conn.connectTimeout = 5000
                     conn.connect()
-                    val parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText()).getJSONObject("perfil")
+                    var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
+                    Log.d("HTTP", parser.toString())
+                    parser = parser.getJSONObject("perfil")
                     val response = ProfileResponse(parser.getString("nickname"),
                         parser.getString("name"),
                         parser.getString("birthday"),
                         parser.getJSONObject("country").getString("name"),
+                        parser.getJSONObject("country").getString("code"),
+                        parser.getInt("range"),
+                        parser.getInt("points"),
+                        parser.getString("registerDate"),
+                        parser.getInt("nFriends"),
+                        parser.getBoolean("hasImage"),
                         false)
                     return@withContext response
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
-                    return@withContext ProfileResponse("", "", "", "", true)
+                    return@withContext ProfileResponse("", "", "", "",
+                        "", 0, 0, "", 0, false, true)
                 }
                 catch (e: IOException) {
                     // Url not found
-                    return@withContext ProfileResponse("", "", "", "", true)
+                    return@withContext ProfileResponse("", "", "", "",
+                        "", 0, 0, "", 0, false, true)
                 }
             }
         }
 
-        // TODO: pass in/out parameters as array or data class with parser
-        suspend fun makeImageRequest(user: Int): Drawable? {
+        suspend fun makeImageRequest(request: ImageRequest): ImageResponse {
             return withContext(Dispatchers.IO) {
                 try{
                     val conn: HttpURLConnection
-                    if (user == -1) conn = URL("$base_url/do-getProfileImage/$id").openConnection() as HttpURLConnection
-                    else conn = URL("$base_url/do-getProfileImage/$user").openConnection() as HttpURLConnection
+                    if (request.id == null) conn = URL("$base_url/do-getProfileImage/$id").openConnection() as HttpURLConnection
+                    else conn = URL("$base_url/do-getProfileImage/${request.id}").openConnection() as HttpURLConnection
                     conn.requestMethod = "GET"
                     conn.setRequestProperty("Content-Type", "application/json; utf-8")
                     conn.setRequestProperty("x-access-token", token)
                     conn.connectTimeout = 5000
                     conn.connect()
-                    val d = Drawable.createFromStream(conn.inputStream, "profile")
-                    return@withContext d
+                    return@withContext ImageResponse(Drawable.createFromStream(conn.inputStream, "profile"), false)
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
-                    return@withContext null
+                    return@withContext ImageResponse(null, true)
                 }
                 catch (e: IOException) {
                     // Url not found
-                    return@withContext null
+                    return@withContext ImageResponse(null, true)
                 }
             }
         }

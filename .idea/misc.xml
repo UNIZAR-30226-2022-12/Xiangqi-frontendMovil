@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_baseline_cake_24.xml" value="0.2985" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_baseline_monetization_on_40.xml" value="0.2985" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_launcher_background.xml" value="0.173" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_edit_profile.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_friend.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_home.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_profile.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_signin.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_signup.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_delete_account.xml" value="0.358695652173913" />
