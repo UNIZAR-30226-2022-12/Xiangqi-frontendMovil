@@ -36,7 +36,7 @@ class HttpHandler {
     data class ProfileResponse(val nickname: String, val realname: String, val birthdate: String,
                                val country: String, val code: String, val ranking: Int,
                                val points: Int, val registerdate: String, val friends: Int,
-                               val image: Boolean, val error: Boolean)
+                               val image: Boolean, val played: Int, val won: Int, val error: Boolean)
     data class ImageRequest(val id: Int?)
     data class ImageResponse(val image: Drawable?, val error: Boolean)
     data class CountriesResponse(val countryList: List<String>, val codeList: List<String>,
@@ -207,29 +207,34 @@ class HttpHandler {
                     conn.connect()
                     var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
                     Log.d("HTTP", parser.toString())
-                    parser = parser.getJSONObject("perfil")
-                    val response = ProfileResponse(parser.getString("nickname"),
-                        parser.getString("name"),
-                        parser.getString("birthday"),
-                        parser.getJSONObject("country").getString("name"),
-                        parser.getJSONObject("country").getString("code"),
-                        parser.getInt("range"),
-                        parser.getInt("points"),
-                        parser.getString("registerDate"),
-                        parser.getInt("nFriends"),
-                        parser.getBoolean("hasImage"),
+                    val profile = parser.getJSONObject("perfil")
+                    val stats = parser.getJSONObject("estadisticas")
+                    val response = ProfileResponse(profile.getString("nickname"),
+                        profile.getString("name"),
+                        profile.getString("birthday"),
+                        profile.getJSONObject("country").getString("name"),
+                        profile.getJSONObject("country").getString("code"),
+                        profile.getInt("range"),
+                        profile.getInt("points"),
+                        profile.getString("registerDate"),
+                        profile.getInt("nFriends"),
+                        profile.getBoolean("hasImage"),
+                        stats.getInt("totalJugadas"),
+                        stats.getInt("totalGanadas"),
                         false)
                     return@withContext response
                 }
                 catch (e: SocketTimeoutException) {
                     // Timeout msg
                     return@withContext ProfileResponse("", "", "", "",
-                        "", 0, 0, "", 0, false, true)
+                        "", 0, 0, "", 0, false, 0,
+                        0, true)
                 }
                 catch (e: IOException) {
                     // Url not found
                     return@withContext ProfileResponse("", "", "", "",
-                        "", 0, 0, "", 0, false, true)
+                        "", 0, 0, "", 0, false, 0,
+                        0, true)
                 }
             }
         }

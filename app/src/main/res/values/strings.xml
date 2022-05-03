@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Xiangqi Online</string>
+    <string name="signin_title">Inicio de sesión</string>
     <string name="signin_email">E-mail</string>
     <string name="signin_pass">Contraseña</string>
     <string name="signin_login_button">Iniciar sesión</string>
@@ -7,6 +8,7 @@
     <string name="signin_forgotten_pass">¿Has olvidado tu contraseña?</string>
     <string name="forgotten_pass_instructions">Introduce tu correo electrónico y te mandaremos las instrucciones necesarias para recuperar tu contraseña.</string>
     <string name="forgotten_pass_recovery_button">Recuperar contraseña</string>
+    <string name="signup_title">Registro</string>
     <string name="signup_nickname">Nombre de usuario</string>
     <string name="signup_realname">Nombre completo</string>
     <string name="signup_birthdate">Fecha de nacimiento</string>
@@ -23,10 +25,17 @@
     <string name="home_shop">Tienda</string>
     <string name="home_history">Historial</string>
     <string name="home_skin">Aspecto</string>
+    <string name="profile_title">Perfil</string>
     <string name="profile_loading">Cargando…</string>
     <string name="profile_birthdate">Fecha de nacimiento:</string>
     <string name="profile_points">Número de puntos:</string>
     <string name="profile_ranking">Puesto en ranking:</string>
     <string name="profile_date">Usuario desde:</string>
     <string name="profile_friends">Número de amigos:</string>
+    <string name="profile_delete">Eliminar cuenta</string>
+    <string name="edit_title">Editar perfil</string>
+    <string name="delete_title">¿Seguro que desea eliminar su cuenta?</string>
+    <string name="delete_body">Se borrarán todos sus datos y no podrá recuperarlos</string>
+    <string name="delete_yes">Si</string>
+    <string name="delete_no">No</string>
 </resources>

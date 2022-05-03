@@ -7,6 +7,7 @@ import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +42,7 @@ class SignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+        setTitle(R.string.signup_title)
 
         // Set default country dropdown menu items
         val country: TextInputLayout = findViewById(R.id.editTextCountry)
@@ -149,6 +151,9 @@ class SignUp : AppCompatActivity() {
         dialog.setContentView(R.layout.fragment_eula)
         dialog.findViewById<TextView>(R.id.textView).text = Html.fromHtml(resources.getString(R.string.eula), 0)
 
+        // Enable backward navigation
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Retrieve country list
         MainScope().launch {
             val response = HttpHandler.makeCountriesRequest()
@@ -166,6 +171,13 @@ class SignUp : AppCompatActivity() {
                 (country.editText as? AutoCompleteTextView)?.setAdapter(adapter)
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return true
     }
 
     fun onClickBirthdate(view: View) {

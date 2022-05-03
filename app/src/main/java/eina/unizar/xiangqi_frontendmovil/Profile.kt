@@ -1,8 +1,10 @@
 package eina.unizar.xiangqi_frontendmovil
 
+import android.app.Dialog
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -14,9 +16,17 @@ import kotlinx.coroutines.launch
 
 
 class Profile : AppCompatActivity() {
+    private lateinit var dialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        setTitle(R.string.profile_title)
+
+        // Construct delete account dialog
+        dialog = Dialog(this)
+        dialog.setContentView(R.layout.fragment_delete_account)
+
         MainScope().launch {
             // Retrieve profile data
             val response = HttpHandler.makeProfileRequest(HttpHandler.ProfileRequest(null))
@@ -56,26 +66,52 @@ class Profile : AppCompatActivity() {
             findViewById<ImageView>(R.id.imageViewFriends).visibility = ImageView.VISIBLE
             findViewById<TextView>(R.id.textViewFriendsTitle).visibility = TextView.VISIBLE
             findViewById<TextView>(R.id.textViewFriends).text = "${response.points} amigos"
+
+            val winrate = findViewById<ProgressBar>(R.id.progressBarWinrate)
+            winrate.visibility = ProgressBar.VISIBLE
+            winrate.max = response.played
+            winrate.progress = response.won
+            findViewById<TextView>(R.id.textViewWinrate).text = "Partidas ganadas: ${response.won}" +
+                    "  Partidas jugadas: ${response.played}"
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val result = super.onCreateOptionsMenu(menu)
+        menu?.add(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.edit_title)
+        menu?.add(Menu.NONE, Menu.FIRST+1, Menu.NONE, R.string.profile_delete)
+        return result
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            Menu.FIRST -> Toast.makeText(this ,"No implementado aun", Toast.LENGTH_SHORT).show()
+            Menu.FIRST+1 -> dialog.show()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun editProfile(view: View) {
         Toast.makeText(this ,"No implementado aun", Toast.LENGTH_SHORT).show()
     }
-    fun deleteProfile(view: View) {
-         var context = this
+
+    fun onClickCancel(view: View) {
+        dialog.hide()
+    }
+
+    fun onClickDelete(view: View) {
+        val context = this
         MainScope().launch {
             if (HttpHandler.makeDeletionRequest().error){
                 Toast.makeText(context ,"No se ha podido eliminar la cuenta", Toast.LENGTH_SHORT).show()
-            }else{
+            }
+            else {
                 val intent = Intent(context, SignIn::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                intent.putExtra("Exit me", true)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                Toast.makeText(context ,"La cuenta ha sido eliminada correctamente", Toast.LENGTH_LONG).show()
                 startActivity(intent)
                 finish()
             }
         }
     }
-
-
 }
