@@ -347,6 +347,4 @@ class SignUp : AppCompatActivity() {
             }
         }
     }
-
-    fun accept(view: View) {}
 }

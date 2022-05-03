@@ -5,9 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp">
+    tools:context=".EditProfile">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -57,28 +58,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextEmail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
-            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
-            app:layout_constraintTop_toBottomOf="@+id/editTextRealname">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints=".AUTOFILL_HINT_EMAIL_ADDRESS"
-                android:hint="@string/signin_email"
-                android:inputType="textEmailAddress"
-                android:textColorHint="#78909C"
-                android:textSize="21sp"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextBirthdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -87,7 +66,7 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
             app:layout_constraintStart_toStartOf="@+id/editTextNickname"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEmail">
+            app:layout_constraintTop_toBottomOf="@+id/editTextRealname">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -150,19 +129,66 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextImage"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_PASSWORD"
+                android:hint="@string/signin_pass"
+                android:inputType="textPassword"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextRepassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:visibility="gone"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
+            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_PASSWORD"
+                android:hint="@string/signup_repass"
+                android:inputType="textPassword"
+                android:textColorHint="#78909C"
+                android:textSize="21sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
-            android:id="@+id/buttonRegister"
+            android:id="@+id/buttonConfirm"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
-            android:text="Aceptar"
+            android:text="@string/edit_confirm"
             android:textSize="28sp"
-            android:onClick="accept"
+            android:onClick="onClickConfirm"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/editTextNickname"
             app:layout_constraintStart_toStartOf="@+id/editTextNickname"
-            app:layout_constraintTop_toBottomOf="@+id/editTextImage"/>
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

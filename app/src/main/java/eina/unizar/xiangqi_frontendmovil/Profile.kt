@@ -10,13 +10,17 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-
 class Profile : AppCompatActivity() {
     private lateinit var dialog: Dialog
+    private lateinit var response: HttpHandler.ProfileResponse
+    val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) recreate()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,7 @@ class Profile : AppCompatActivity() {
 
         MainScope().launch {
             // Retrieve profile data
-            val response = HttpHandler.makeProfileRequest(HttpHandler.ProfileRequest(null))
+            response = HttpHandler.makeProfileRequest(HttpHandler.ProfileRequest(null))
             if (response.image) {
                 val image = HttpHandler.makeImageRequest(HttpHandler.ImageRequest(null)).image
                 findViewById<ImageView>(R.id.imageViewProfile).setImageDrawable(image)
@@ -85,14 +89,17 @@ class Profile : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            Menu.FIRST -> Toast.makeText(this ,"No implementado aun", Toast.LENGTH_SHORT).show()
+            Menu.FIRST -> {
+                val intent = Intent(this, EditProfile::class.java)
+                intent.putExtra("nickname", response.nickname)
+                intent.putExtra("realname", response.realname)
+                intent.putExtra("birthdate", response.birthdate)
+                intent.putExtra("country", response.country)
+                callback.launch(intent)
+            }
             Menu.FIRST+1 -> dialog.show()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    fun editProfile(view: View) {
-        Toast.makeText(this ,"No implementado aun", Toast.LENGTH_SHORT).show()
     }
 
     fun onClickCancel(view: View) {

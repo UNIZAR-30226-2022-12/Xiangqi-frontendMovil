@@ -34,8 +34,9 @@
     <string name="profile_friends">Número de amigos:</string>
     <string name="profile_delete">Eliminar cuenta</string>
     <string name="edit_title">Editar perfil</string>
+    <string name="edit_confirm">Guardar cambios</string>
     <string name="delete_title">¿Seguro que desea eliminar su cuenta?</string>
-    <string name="delete_body">Se borrarán todos sus datos y no podrá recuperarlos</string>
+    <string name="delete_body">Se borrarán todos sus datos y no podrá recuperarlos.</string>
     <string name="delete_yes">Si</string>
     <string name="delete_no">No</string>
 </resources>
