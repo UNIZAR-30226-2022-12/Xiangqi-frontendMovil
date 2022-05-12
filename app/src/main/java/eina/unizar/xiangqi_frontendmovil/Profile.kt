@@ -29,7 +29,7 @@ class Profile : Fragment(R.layout.fragment_profile) {
 
         // Construct delete account dialog
         dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.fragment_delete_account)
+        dialog.setContentView(R.layout.dialog_delete_account)
         dialog.findViewById<Button>(R.id.buttonDeleteNo).setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View) {
                 dialog.hide()
@@ -64,6 +64,7 @@ class Profile : Fragment(R.layout.fragment_profile) {
             view.findViewById<ProgressBar>(R.id.progressBar).visibility = ProgressBar.GONE
             view.findViewById<TextView>(R.id.textViewLoading).visibility = TextView.GONE
 
+            if (response.error) return@launch
             view.findViewById<ImageView>(R.id.imageViewProfile).visibility = ImageView.VISIBLE
             view.findViewById<TextView>(R.id.textViewBirthdateTitle).visibility = TextView.VISIBLE
             view.findViewById<TextView>(R.id.textViewRealname).text = response.realname

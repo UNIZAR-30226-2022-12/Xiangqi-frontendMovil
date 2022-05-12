@@ -47,7 +47,7 @@ class SignIn : AppCompatActivity() {
 
         // Construct forgotten password dialog
         dialog = Dialog(this)
-        dialog.setContentView(R.layout.fragment_forgotten_pass)
+        dialog.setContentView(R.layout.dialog_forgotten_pass)
 
         // Add listener to remove editText error messages after editing it
         val forgottenEmail: TextInputLayout = dialog.findViewById(R.id.editTextForgottenEmail)
@@ -139,8 +139,7 @@ class SignIn : AppCompatActivity() {
     }
 
     fun onClickRegister(view: View) {
-        val i = Intent(this, SignUp::class.java)
-        startActivity(i)
+        startActivity(Intent(this, SignUp::class.java))
     }
 
     private fun checkForgottenPassData(): Boolean {

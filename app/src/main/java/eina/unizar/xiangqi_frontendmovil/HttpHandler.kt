@@ -47,7 +47,7 @@ object HttpHandler {
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
     private var token = ""
-    private var id = -1
+    var id = -1
 
     suspend fun makeLoginRequest(request: LoginRequest): LoginResponse {
         return withContext(Dispatchers.IO) {

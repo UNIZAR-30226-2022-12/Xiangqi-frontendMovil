@@ -21,6 +21,11 @@
     <string name="home_open">Abrir panel lateral</string>
     <string name="home_close">Cerrar panel lateral</string>
     <string name="games_title">Partidas</string>
+    <string name="games_new">Nueva partida</string>
+    <string name="games_sync">Partida con temporizador</string>
+    <string name="games_friend">Partida contra un amigo conectado</string>
+    <string name="games_start">Comenzar partida</string>
+    <string name="games_searching">Buscando oponente</string>
     <string name="profile_title">Perfil</string>
     <string name="profile_loading">Cargando…</string>
     <string name="profile_birthdate">Fecha de nacimiento:</string>

@@ -7,6 +7,7 @@
 
         <item
             android:id="@+id/nav_games"
+            android:icon="@drawable/ic_baseline_add_40"
             android:title="@string/games_title" />
 
         <item
