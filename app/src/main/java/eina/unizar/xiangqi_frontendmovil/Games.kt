@@ -14,8 +14,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class Games : Fragment(R.layout.fragment_games) {
-    lateinit var dialog: Dialog
-    val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private lateinit var dialog: Dialog
+    private val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         dialog.hide()
         parentFragmentManager
             .beginTransaction()
@@ -36,27 +36,25 @@ class Games : Fragment(R.layout.fragment_games) {
             }
         }
         dialog.setContentView(R.layout.dialog_new_game)
-        dialog.findViewById<Button>(R.id.buttonGameStart).setOnClickListener(object: View.OnClickListener {
-            override fun onClick(view: View) {
-                val button = dialog.findViewById<Button>(R.id.buttonGameStart)
-                button.isEnabled = false
-                button.text = getText(R.string.games_searching)
-                SocketHandler.searchRandomOpponent()
-            }
-        })
-
-        view.findViewById<Button>(R.id.buttonNewGame).setOnClickListener(object: View.OnClickListener {
-            override fun onClick(view: View) {
-                dialog.show()
-            }
-        })
-
-        // Set listener for opponent found
-        SocketHandler.socket.once("startGame") {
-            Log.d("Games", it[0].toString())
+        dialog.findViewById<Button>(R.id.buttonGameStart).setOnClickListener {
+            // Begin opponent search
+            val button = dialog.findViewById<Button>(R.id.buttonGameStart)
+            button.isEnabled = false
+            button.text = getText(R.string.games_searching)
+            //SocketHandler.searchRandomOpponent()
+            // Launch intent (debug only)
             val i = Intent(activity, Board::class.java)
             callback.launch(i)
         }
+
+        view.findViewById<Button>(R.id.buttonNewGame).setOnClickListener { dialog.show() }
+
+        // Set listener for opponent found
+        /*SocketHandler.socket.once("startGame") {
+            Log.d("Games", it[0].toString())
+            val i = Intent(activity, Board::class.java)
+            callback.launch(i)
+        }*/
 
         MainScope().launch {
             // Retrieve profile data
@@ -66,6 +64,7 @@ class Games : Fragment(R.layout.fragment_games) {
             view.findViewById<ProgressBar>(R.id.progressBar).visibility = ProgressBar.GONE
             view.findViewById<TextView>(R.id.textViewLoading).visibility = TextView.GONE
             view.findViewById<Button>(R.id.buttonNewGame).visibility = Button.VISIBLE
+            view.findViewById<TextView>(R.id.textViewTable).visibility = Button.VISIBLE
 
             if (response.error) return@launch
         }
