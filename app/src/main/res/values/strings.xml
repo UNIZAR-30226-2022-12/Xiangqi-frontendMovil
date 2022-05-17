@@ -24,6 +24,12 @@
     <string name="games_new">Nueva partida</string>
     <string name="games_table">Mis partidas</string>
     <string name="games_row">No se han encontrado partidas</string>
+    <string name="games_opponent">Adversario</string>
+    <string name="games_country">País</string>
+    <string name="games_start_date">Inicio\nde juego</string>
+    <string name="games_last_mov_date">Último\nmovimiento</string>
+    <string name="games_turn">Toca\nmover</string>
+    <string name="games_continue">Continuar</string>
     <string name="games_sync">Partida con temporizador</string>
     <string name="games_friend">Partida contra un amigo conectado</string>
     <string name="games_start">Comenzar partida</string>

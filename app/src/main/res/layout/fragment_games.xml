@@ -49,38 +49,103 @@
         android:id="@+id/textViewTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:text="@string/games_table"
         android:textSize="21sp"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/scrollView2"
         app:layout_constraintTop_toBottomOf="@+id/buttonNewGame"
         tools:visibility="visible"/>
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:visibility="gone"
+        android:layout_marginEnd="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTable"
-        tools:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@+id/textViewTable">
 
-        <TextView
-            android:id="@+id/textViewRow"
+        <TableLayout
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="@string/games_row"
-            android:textSize="15sp"
-            android:visibility="gone"
-            tools:visibility="visible"/>
-    </LinearLayout>
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:id="@+id/tableHeader"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_span="2"
+                    android:padding="2dp"
+                    android:text="@string/games_opponent"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:text="@string/games_country"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:text="@string/games_start_date"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:text="@string/games_last_mov_date"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:text="@string/games_turn"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:text="@string/games_continue"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableNotFound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="6"
+                    android:text="@string/games_row"
+                    android:textSize="11sp"/>
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

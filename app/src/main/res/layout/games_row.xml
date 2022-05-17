@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewOpponent"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.NavigationView.Item"
+        app:srcCompat="@drawable/profile"
+        app:strokeColor="@color/cardview_shadow_start_color"
+        app:strokeWidth="1dp"/>
+
+    <TextView
+        android:id="@+id/textViewOpponent"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:padding="2dp"
+        tools:text="android"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewOpponent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewCountry"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:padding="2dp"
+        tools:text="Angola"
+        android:textSize="9sp"/>
+
+    <TextView
+        android:id="@+id/textViewStartDate"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:padding="2dp"
+        tools:text="10/05/2022"
+        android:textSize="9sp"/>
+
+    <TextView
+        android:id="@+id/textViewLastMovDate"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="2dp"
+        tools:text="17/05/2022"
+        android:textSize="9sp"/>
+
+    <ImageView
+        android:id="@+id/imageViewMove"
+        android:layout_gravity="center"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/ic_outline_cancel_40"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:text="@string/games_continue"
+        android:textSize="7sp"/>
+
+</TableRow>
