@@ -95,6 +95,7 @@ class Games : Fragment(R.layout.fragment_games) {
                         ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_check_circle_outline_40, null))
 
                 row.findViewById<Button>(R.id.button).setOnClickListener {
+                    // Debug, integrate when appropriate
                     Toast.makeText(requireContext(), "Game against ${response.ids[i]}", Toast.LENGTH_SHORT).show()
                 }
             }
