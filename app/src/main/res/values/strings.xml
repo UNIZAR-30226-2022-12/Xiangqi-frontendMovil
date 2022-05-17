@@ -41,6 +41,7 @@
     <string name="profile_ranking">Puesto en ranking:</string>
     <string name="profile_date">Usuario desde:</string>
     <string name="profile_friends">Número de amigos:</string>
+    <string name="profile_daily">Resumen semanal</string>
     <string name="profile_delete">Eliminar cuenta</string>
     <string name="edit_title">Editar perfil</string>
     <string name="edit_confirm">Guardar cambios</string>

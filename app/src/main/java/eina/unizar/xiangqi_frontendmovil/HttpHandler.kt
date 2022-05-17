@@ -36,7 +36,8 @@ object HttpHandler {
     data class ProfileResponse(val nickname: String, val realname: String, val birthdate: String,
                                val country: String, val code: String, val ranking: Int,
                                val points: Int, val registerdate: String, val friends: Int,
-                               val image: Boolean, val played: Int, val won: Int, val error: Boolean)
+                               val image: Boolean, val played: Int, val won: Int, val dailyPlayed: List<Int>,
+                               val dailyWon: List<Int>, val error: Boolean)
     data class ImageRequest(val id: Int?)
     data class ImageResponse(val image: Drawable?, val error: Boolean)
     data class CountriesResponse(val countryList: List<String>, val codeList: List<String>,
@@ -215,6 +216,14 @@ object HttpHandler {
                 Log.d("HTTP", parser.toString())
                 val profile = parser.getJSONObject("perfil")
                 val stats = parser.getJSONObject("estadisticas")
+                val playedArray = stats.getJSONArray("diaJugadas")
+                val wonArray = stats.getJSONArray("diaGanadas")
+                val dailyPlayed = mutableListOf<Int>()
+                val dailyWon = mutableListOf<Int>()
+                for (i in 0 until playedArray.length()) {
+                    dailyPlayed.add(playedArray.getInt(i))
+                    dailyWon.add(wonArray.getInt(i))
+                }
                 val response = ProfileResponse(profile.getString("nickname"),
                     profile.getString("name"),
                     profile.getString("birthday"),
@@ -227,6 +236,8 @@ object HttpHandler {
                     profile.getBoolean("hasImage"),
                     stats.getInt("totalJugadas"),
                     stats.getInt("totalGanadas"),
+                    dailyPlayed.toList(),
+                    dailyWon.toList(),
                     false)
                 return@withContext response
             }
@@ -234,13 +245,13 @@ object HttpHandler {
                 // Timeout msg
                 return@withContext ProfileResponse("", "", "", "",
                     "", 0, 0, "", 0, false, 0,
-                    0, true)
+                    0, listOf(), listOf(), true)
             }
             catch (e: IOException) {
                 // Url not found
                 return@withContext ProfileResponse("", "", "", "",
                     "", 0, 0, "", 0, false, 0,
-                    0, true)
+                    0, listOf(), listOf(), true)
             }
         }
     }

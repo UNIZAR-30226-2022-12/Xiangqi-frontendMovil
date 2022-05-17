@@ -8,8 +8,17 @@ import android.view.*
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Profile : Fragment(R.layout.fragment_profile) {
     private lateinit var dialog: Dialog
@@ -94,12 +103,65 @@ class Profile : Fragment(R.layout.fragment_profile) {
             view.findViewById<TextView>(R.id.textViewFriendsTitle).visibility = TextView.VISIBLE
             view.findViewById<TextView>(R.id.textViewFriends).text = "${response.points} amigos"
 
+            // Set winrate progress bar data
             val winrate = view.findViewById<ProgressBar>(R.id.progressBarWinrate)
             winrate.visibility = ProgressBar.VISIBLE
             winrate.max = response.played
             winrate.progress = response.won
             view.findViewById<TextView>(R.id.textViewWinrate).text = "Partidas ganadas: ${response.won}" +
                     "  Partidas jugadas: ${response.played}"
+
+            // Set daily performance chart data
+            val dailyPlayed = mutableListOf<BarEntry>()
+            val dailyWon = mutableListOf<BarEntry>()
+            for (i in 0 until response.dailyPlayed.size) {
+                dailyPlayed.add(BarEntry((i+1).toFloat(), response.dailyPlayed[i].toFloat()))
+                dailyWon.add(BarEntry((i+1).toFloat(), response.dailyWon[i].toFloat()))
+            }
+
+            val playedDataset = BarDataSet(dailyPlayed, "Partidas jugadas")
+            playedDataset.color = resources.getColor(R.color.blue, null)
+            playedDataset.valueTextColor = resources.getColor(R.color.black, null)
+
+            val wonDataset = BarDataSet(dailyWon, "Partidas ganadas")
+            wonDataset.color = resources.getColor(R.color.orange, null)
+            wonDataset.valueTextColor = resources.getColor(R.color.black, null)
+
+            val data = BarData(playedDataset, wonDataset)
+            data.setDrawValues(false)
+            data.barWidth = 0.35f
+
+            // Configure chart appearance and assign data
+            val chart = view.findViewById<BarChart>(R.id.barChart)
+            chart.description.isEnabled = false
+            chart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            chart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+
+            chart.axisLeft.axisMinimum = 0F
+            chart.axisLeft.axisMaximum = data.yMax
+            chart.axisRight.setDrawGridLines(false)
+            chart.axisRight.setDrawLabels(false)
+
+            val labels = mutableListOf<String>("Hoy")
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+            val today = Calendar.getInstance()
+            for (i in 0 until 6) {
+                today.add(Calendar.DATE, -1)
+                labels.add(sdf.format(today.time))
+            }
+            chart.xAxis.axisMinimum = 0F
+            chart.xAxis.axisMaximum = 7F
+            chart.xAxis.valueFormatter = IndexAxisValueFormatter(labels.reversed())
+            chart.xAxis.textSize = 9f
+            chart.xAxis.setCenterAxisLabels(true)
+            chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+            chart.xAxis.granularity = 1f
+            chart.xAxis.isGranularityEnabled = true
+
+            chart.data = data
+            chart.groupBars(0f, 0.2f, 0.05f)
+            chart.visibility = BarChart.VISIBLE
+            view.findViewById<TextView>(R.id.textViewWeekly).visibility = TextView.VISIBLE
         }
     }
 
