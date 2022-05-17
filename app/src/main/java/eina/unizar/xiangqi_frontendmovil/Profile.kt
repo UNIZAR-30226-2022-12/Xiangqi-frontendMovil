@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class Profile : Fragment(R.layout.fragment_profile) {
     private lateinit var dialog: Dialog
     private lateinit var response: HttpHandler.ProfileResponse
-    val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             parentFragmentManager
                 .beginTransaction()
@@ -30,27 +30,28 @@ class Profile : Fragment(R.layout.fragment_profile) {
         // Construct delete account dialog
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_delete_account)
-        dialog.findViewById<Button>(R.id.buttonDeleteNo).setOnClickListener(object: View.OnClickListener {
-            override fun onClick(view: View) {
-                dialog.hide()
-            }
-        })
-        dialog.findViewById<Button>(R.id.buttonDeleteYes).setOnClickListener(object: View.OnClickListener {
-            override fun onClick(view: View) {
-                MainScope().launch {
-                    if (HttpHandler.makeDeletionRequest().error){
-                        Toast.makeText(activity ,"No se ha podido eliminar la cuenta", Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        val intent = Intent(activity, SignIn::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        Toast.makeText(activity ,"La cuenta ha sido eliminada correctamente", Toast.LENGTH_LONG).show()
-                        startActivity(intent)
-                        activity?.finish()
-                    }
+        dialog.findViewById<Button>(R.id.buttonDeleteNo).setOnClickListener { dialog.hide() }
+        dialog.findViewById<Button>(R.id.buttonDeleteYes).setOnClickListener {
+            MainScope().launch {
+                if (HttpHandler.makeDeletionRequest().error) {
+                    Toast.makeText(
+                        activity,
+                        "No se ha podido eliminar la cuenta",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val intent = Intent(activity, SignIn::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    Toast.makeText(
+                        activity,
+                        "La cuenta ha sido eliminada correctamente",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    startActivity(intent)
+                    activity?.finish()
                 }
             }
-        })
+        }
 
         MainScope().launch {
             // Retrieve profile data

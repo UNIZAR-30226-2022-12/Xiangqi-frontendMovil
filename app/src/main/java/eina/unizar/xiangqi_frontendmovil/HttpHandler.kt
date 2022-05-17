@@ -44,6 +44,10 @@ object HttpHandler {
     data class EditRequest(val nickname: String, val realname: String, val pwd: String,
                            val birthdate: String, val country: String, val image: Uri?)
     data class EditResponse(val success: Boolean, val error: Boolean)
+    data class GamesRequest(val id: Int?)
+    data class GamesResponse(val ids: List<Int>, val nicknames: List<String>, val countries: List<String>,
+                             val codes: List<String>, val startDates: List<String>, val lastMovDates: List<String>,
+                             val myTurns: List<Boolean>, val hasImages: List<Boolean>, val error: Boolean)
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
     private var token = ""
@@ -207,7 +211,7 @@ object HttpHandler {
                 conn.setRequestProperty("x-access-token", token)
                 conn.connectTimeout = 5000
                 conn.connect()
-                var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
+                val parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
                 Log.d("HTTP", parser.toString())
                 val profile = parser.getJSONObject("perfil")
                 val stats = parser.getJSONObject("estadisticas")
@@ -330,6 +334,64 @@ object HttpHandler {
             catch (e: IOException) {
                 // Url not found
                 return@withContext EditResponse(false, true)
+            }
+        }
+    }
+
+    suspend fun makeGamesRequest(request: GamesRequest): GamesResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection
+                if (request.id == null) conn = URL("$base_url/do-getProfile/$id").openConnection() as HttpURLConnection
+                else conn = URL("$base_url/do-getProfile/${request.id}").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
+                Log.d("HTTP", parser.toString())
+                val games = parser.getJSONArray("partidas")
+                val ids = mutableListOf<Int>()
+                val nicknames = mutableListOf<String>()
+                val countries = mutableListOf<String>()
+                val codes = mutableListOf<String>()
+                val startDates = mutableListOf<String>()
+                val lastMovDates = mutableListOf<String>()
+                val myTurns = mutableListOf<Boolean>()
+                val hasImages = mutableListOf<Boolean>()
+                for (i in 0 until games.length()) {
+                    val item: JSONObject = games.getJSONObject(i)
+                    ids.add(item.getInt("id"))
+                    nicknames.add(item.getString("nickname"))
+                    countries.add(item.getString("country"))
+                    codes.add(item.getString("flag").subSequence(5, 7).toString().uppercase())
+                    startDates.add(item.getString("startDate"))
+                    lastMovDates.add(item.getString("lastMovDate"))
+                    myTurns.add(item.getBoolean("myTurn"))
+                    hasImages.add(item.getBoolean("hasImage"))
+                }
+                val response = GamesResponse(
+                    ids.toList(),
+                    nicknames.toList(),
+                    countries.toList(),
+                    codes.toList(),
+                    startDates.toList(),
+                    lastMovDates.toList(),
+                    myTurns.toList(),
+                    hasImages.toList(),
+                    false)
+                return@withContext response
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext GamesResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), listOf(), true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext GamesResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), listOf(), true)
             }
         }
     }
