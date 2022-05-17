@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import eina.unizar.xiangqi_frontendmovil.home_fragments.*
 
 
 class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -88,6 +89,22 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
             R.id.nav_profile -> {
                 title = R.string.profile_title
                 fragment = Profile()
+            }
+            R.id.nav_friends -> {
+                title = R.string.friends_title
+                fragment = Friends()
+            }
+            R.id.nav_ranking -> {
+                title = R.string.ranking_title
+                fragment = Ranking()
+            }
+            R.id.nav_store -> {
+                title = R.string.store_title
+                fragment = Store()
+            }
+            R.id.nav_history -> {
+                title = R.string.history_title
+                fragment = History()
             }
         }
         setTitle(getString(title))

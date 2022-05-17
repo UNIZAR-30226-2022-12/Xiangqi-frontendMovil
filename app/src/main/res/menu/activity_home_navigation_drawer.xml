@@ -15,5 +15,25 @@
             android:icon="@drawable/ic_baseline_home_40"
             android:title="@string/profile_title" />
 
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_baseline_people_alt_40"
+            android:title="@string/friends_title" />
+
+        <item
+            android:id="@+id/nav_ranking"
+            android:icon="@drawable/ic_baseline_menu_40"
+            android:title="@string/ranking_title" />
+
+        <item
+            android:id="@+id/nav_store"
+            android:icon="@drawable/ic_outline_shopping_cart_40"
+            android:title="@string/store_title" />
+
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_baseline_history_40"
+            android:title="@string/history_title" />
+
     </group>
 </menu>

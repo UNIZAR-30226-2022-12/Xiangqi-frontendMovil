@@ -1,15 +1,17 @@
-package eina.unizar.xiangqi_frontendmovil
+package eina.unizar.xiangqi_frontendmovil.home_fragments
 
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import eina.unizar.xiangqi_frontendmovil.Board
+import eina.unizar.xiangqi_frontendmovil.HttpHandler
+import eina.unizar.xiangqi_frontendmovil.R
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -59,6 +61,7 @@ class Games : Fragment(R.layout.fragment_games) {
         MainScope().launch {
             // Retrieve profile data
             val response = HttpHandler.makeGamesRequest(HttpHandler.GamesRequest(null))
+            if (!isAdded) return@launch
 
             // Hide loading bar and show basic ui
             view.findViewById<ProgressBar>(R.id.progressBar).visibility = ProgressBar.GONE
@@ -92,7 +95,8 @@ class Games : Fragment(R.layout.fragment_games) {
 
                 if (response.myTurns[i])
                     row.findViewById<ImageView>(R.id.imageViewMove).setImageDrawable(
-                        ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_check_circle_outline_40, null))
+                        ResourcesCompat.getDrawable(resources,
+                            R.drawable.ic_baseline_check_circle_outline_40, null))
 
                 row.findViewById<Button>(R.id.button).setOnClickListener {
                     // Debug, integrate when appropriate

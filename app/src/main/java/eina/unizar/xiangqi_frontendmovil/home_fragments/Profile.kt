@@ -1,4 +1,4 @@
-package eina.unizar.xiangqi_frontendmovil
+package eina.unizar.xiangqi_frontendmovil.home_fragments
 
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
@@ -15,6 +15,10 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import eina.unizar.xiangqi_frontendmovil.EditProfile
+import eina.unizar.xiangqi_frontendmovil.HttpHandler
+import eina.unizar.xiangqi_frontendmovil.R
+import eina.unizar.xiangqi_frontendmovil.SignIn
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -65,6 +69,7 @@ class Profile : Fragment(R.layout.fragment_profile) {
         MainScope().launch {
             // Retrieve profile data
             response = HttpHandler.makeProfileRequest(HttpHandler.ProfileRequest(null))
+            if (!isAdded) return@launch
             if (response.image) {
                 val image = HttpHandler.makeImageRequest(HttpHandler.ImageRequest(null)).image
                 view.findViewById<ImageView>(R.id.imageViewProfile).setImageDrawable(image)
@@ -161,6 +166,7 @@ class Profile : Fragment(R.layout.fragment_profile) {
             chart.data = data
             chart.groupBars(0f, 0.2f, 0.05f)
             chart.visibility = BarChart.VISIBLE
+            chart.setTouchEnabled(false)
             view.findViewById<TextView>(R.id.textViewWeekly).visibility = TextView.VISIBLE
         }
     }
