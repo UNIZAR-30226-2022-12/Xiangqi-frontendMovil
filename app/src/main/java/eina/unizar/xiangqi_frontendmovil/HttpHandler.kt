@@ -49,6 +49,12 @@ object HttpHandler {
     data class GamesResponse(val ids: List<Int>, val nicknames: List<String>, val countries: List<String>,
                              val codes: List<String>, val startDates: List<String>, val lastMovDates: List<String>,
                              val myTurns: List<Boolean>, val hasImages: List<Boolean>, val error: Boolean)
+    data class PointsResponse(val points: Int, val error: Boolean)
+    data class StoreResponse(val ids: List<Int>, val types: List<Int>, val names: List<String>,
+                             val descs: List<String>, val cats: List<String>, val prices: List<Int>,
+                             val purchased: List<Boolean>, val error: Boolean)
+    data class PurchaseRequest(val id: Int, val type: Int, val price: Int)
+    data class PurchaseResponse(val success: Boolean, val error: Boolean)
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
     private var token = ""
@@ -361,7 +367,6 @@ object HttpHandler {
                 conn.connectTimeout = 5000
                 conn.connect()
                 var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
-                Log.d("HTTP", parser.toString())
                 val games = parser.getJSONArray("partidas")
                 val ids = mutableListOf<Int>()
                 val nicknames = mutableListOf<String>()
@@ -403,6 +408,121 @@ object HttpHandler {
                 // Url not found
                 return@withContext GamesResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
                     listOf(), listOf(), listOf(), true)
+            }
+        }
+    }
+
+    suspend fun makePointsRequest(): PointsResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getPoints").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                val response = BufferedReader(conn.inputStream.reader()).readText().toInt()
+                return@withContext PointsResponse(response, false)
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext PointsResponse(0, true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext PointsResponse(0, true)
+            }
+        }
+    }
+
+    suspend fun makeStoreRequest(): StoreResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getStoreItems").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
+                val boards = parser.getJSONArray("setsBoards")
+                val pieces = parser.getJSONArray("setsPieces")
+                val ids = mutableListOf<Int>()
+                val types = mutableListOf<Int>()
+                val names = mutableListOf<String>()
+                val descs = mutableListOf<String>()
+                val cats = mutableListOf<String>()
+                val prices = mutableListOf<Int>()
+                val purchased = mutableListOf<Boolean>()
+                for (i in 0 until boards.length()) {
+                    val item: JSONObject = boards.getJSONObject(i)
+                    ids.add(item.getInt("id"))
+                    types.add(item.getInt("tipo"))
+                    names.add(item.getString("name"))
+                    descs.add(item.getString("desc"))
+                    cats.add(item.getString("category"))
+                    prices.add(item.getInt("price"))
+                    purchased.add(item.getBoolean("purchased"))
+                }
+                for (i in 0 until pieces.length()) {
+                    val item: JSONObject = pieces.getJSONObject(i)
+                    ids.add(item.getInt("id"))
+                    types.add(item.getInt("tipo"))
+                    names.add(item.getString("name"))
+                    descs.add(item.getString("desc"))
+                    cats.add(item.getString("category"))
+                    prices.add(item.getInt("price"))
+                    purchased.add(item.getBoolean("purchased"))
+                }
+                val response = StoreResponse(
+                    ids.toList(),
+                    types.toList(),
+                    names.toList(),
+                    descs.toList(),
+                    cats.toList(),
+                    prices.toList(),
+                    purchased.toList(),
+                    false
+                )
+                return@withContext response
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext StoreResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext StoreResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), true)
+            }
+        }
+    }
+
+    suspend fun makePurchaseRequest(request: PurchaseRequest): PurchaseResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-purchaseItem").openConnection() as HttpURLConnection
+                conn.requestMethod = "POST"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.doOutput = true
+                conn.outputStream.write(("{\"id\":\"${request.id}\", " +
+                        "\"tipo\":\"${request.type}\", " +
+                        "\"price\":\"${request.price}\"}")
+                    .toByteArray())
+                conn.connect()
+                val response = BufferedReader(conn.inputStream.reader()).readText().toBooleanStrict()
+                return@withContext PurchaseResponse(response, false)
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext PurchaseResponse(false, true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext PurchaseResponse(false, true)
             }
         }
     }

@@ -52,5 +52,7 @@
     <string name="friends_title">Amigos</string>
     <string name="ranking_title">Ranking</string>
     <string name="store_title">Tienda</string>
+    <string name="store_boards">Sets de tableros</string>
+    <string name="store_pieces">Sets de piezas</string>
     <string name="history_title">Historial</string>
 </resources>
