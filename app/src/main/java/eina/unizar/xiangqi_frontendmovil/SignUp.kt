@@ -148,7 +148,7 @@ class SignUp : AppCompatActivity() {
 
         // Fill EULA dialog
         dialog = Dialog(this)
-        dialog.setContentView(R.layout.fragment_eula)
+        dialog.setContentView(R.layout.dialog_eula)
         dialog.findViewById<TextView>(R.id.textView).text = Html.fromHtml(resources.getString(R.string.eula), 0)
 
         // Enable backward navigation

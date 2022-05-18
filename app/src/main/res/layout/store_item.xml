@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shapeableImageView"
+        android:layout_width="200dp"
+        android:layout_height="360dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.LargeComponent"
+        app:strokeColor="@color/cardview_shadow_start_color"
+        app:strokeWidth="1dp"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageView"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_outline_discount_40"/>
+
+    <TextView
+        android:id="@+id/textViewCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:text="Tablero de madera"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewSkin"
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Day"
+        app:srcCompat="@drawable/skin_board_1"/>
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="Madera teka"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSkin"/>
+
+    <TextView
+        android:id="@+id/textViewDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
+        app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName"
+        tools:text="Tablero con un dragón grabado"/>
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="1dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCost"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCost"
+        tools:text="0"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewCost"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="2dp"
+        android:scaleType="centerInside"
+        android:tint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonBuy"
+        app:layout_constraintStart_toEndOf="@+id/textViewPrice"
+        app:layout_constraintTop_toTopOf="@+id/buttonBuy"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
+        app:srcCompat="@drawable/ic_baseline_monetization_on_40"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonBuy"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="10dp"
+        app:icon="@drawable/ic_outline_shopping_cart_40"
+        app:iconGravity="textTop"
+        app:iconSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarLoading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:indeterminateTint="?android:colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonBuy"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBuy"
+        app:layout_constraintStart_toStartOf="@+id/buttonBuy"
+        app:layout_constraintTop_toTopOf="@+id/buttonBuy"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
