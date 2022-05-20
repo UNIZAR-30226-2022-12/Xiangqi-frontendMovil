@@ -37,7 +37,7 @@ class Ranking : Fragment(R.layout.fragment_ranking) {
             for (i in 0 until response.ids.size) {
                 val layout = layoutInflater.inflate(R.layout.ranking_row, table)
                 val row = table[i+rowOffset]
-                row.findViewById<TextView>(R.id.textViewPosition).text = response.positions[i].toString()
+                row.findViewById<TextView>(R.id.textViewPosition).text = "# ${response.positions[i]+1}"
                 row.findViewById<TextView>(R.id.textViewPlayer).text = response.nicknames[i]
                 row.findViewById<TextView>(R.id.textViewPlayed).text = response.played[i].toString()
                 row.findViewById<TextView>(R.id.textViewWon).text = response.won[i].toString()

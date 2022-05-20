@@ -66,14 +66,16 @@ class Games : Fragment(R.layout.fragment_games) {
             // Hide loading bar and show basic ui
             view.findViewById<ProgressBar>(R.id.progressBar).visibility = ProgressBar.GONE
             view.findViewById<TextView>(R.id.textViewLoading).visibility = TextView.GONE
+
             view.findViewById<Button>(R.id.buttonNewGame).visibility = Button.VISIBLE
             view.findViewById<TextView>(R.id.textViewTable).visibility = TextView.VISIBLE
-            view.findViewById<TableRow>(R.id.tableHeader).visibility = TableRow.VISIBLE
-            val table = view.findViewById<TableLayout>(R.id.tableLayout)
+            view.findViewById<LinearLayout>(R.id.linearLayoutHeader).visibility = LinearLayout.VISIBLE
+            view.findViewById<View>(R.id.divider).visibility = View.VISIBLE
 
+            val table = view.findViewById<LinearLayout>(R.id.linearLayoutTable)
             if (response.error) return@launch
             else if (response.ids.isEmpty()) {
-                table.findViewById<TableRow>(R.id.tableNotFound).visibility = TableRow.VISIBLE
+                table.findViewById<TextView>(R.id.textViewNotFound).visibility = TextView.VISIBLE
                 return@launch
             }
 
