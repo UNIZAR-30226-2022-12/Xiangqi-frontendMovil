@@ -99,6 +99,7 @@ class Store : Fragment(R.layout.fragment_store) {
                                 if (response.error) {
                                     button.isEnabled = true
                                     Toast.makeText(requireContext(), "Error de conexión con backend", Toast.LENGTH_SHORT).show()
+                                    return@launch
                                 }
                                 points -= price
                                 view.findViewById<TextView>(R.id.textViewPoints).text = "Número de puntos: $points"

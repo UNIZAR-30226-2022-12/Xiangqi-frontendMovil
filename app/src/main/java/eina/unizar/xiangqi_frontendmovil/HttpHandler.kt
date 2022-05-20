@@ -55,6 +55,9 @@ object HttpHandler {
                              val purchased: List<Boolean>, val error: Boolean)
     data class PurchaseRequest(val id: Int, val type: Int, val price: Int)
     data class PurchaseResponse(val success: Boolean, val error: Boolean)
+    data class RankingResponse(val ids: List<Int>, val positions: List<Int>, val nicknames: List<String>,
+                               val codes: List<String>, val countries: List<String>, val won: List<Int>,
+                               val played: List<Int>, val hasImages: List<Boolean>, val error: Boolean)
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
     private var token = ""
@@ -366,7 +369,7 @@ object HttpHandler {
                 conn.setRequestProperty("x-access-token", token)
                 conn.connectTimeout = 5000
                 conn.connect()
-                var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
+                val parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
                 val games = parser.getJSONArray("partidas")
                 val ids = mutableListOf<Int>()
                 val nicknames = mutableListOf<String>()
@@ -444,7 +447,7 @@ object HttpHandler {
                 conn.setRequestProperty("x-access-token", token)
                 conn.connectTimeout = 5000
                 conn.connect()
-                var parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
+                val parser = JSONObject(BufferedReader(conn.inputStream.reader()).readText())
                 val boards = parser.getJSONArray("setsBoards")
                 val pieces = parser.getJSONArray("setsPieces")
                 val ids = mutableListOf<Int>()
@@ -523,6 +526,60 @@ object HttpHandler {
             catch (e: IOException) {
                 // Url not found
                 return@withContext PurchaseResponse(false, true)
+            }
+        }
+    }
+
+    suspend fun makeRankingRequest(): RankingResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getRanking").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.connectTimeout = 5000
+                conn.connect()
+                val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
+                val ids = mutableListOf<Int>()
+                val positions = mutableListOf<Int>()
+                val nicknames = mutableListOf<String>()
+                val codes = mutableListOf<String>()
+                val countries = mutableListOf<String>()
+                val won = mutableListOf<Int>()
+                val played = mutableListOf<Int>()
+                val hasImages = mutableListOf<Boolean>()
+                for (i in 0 until parser.length()) {
+                    val item: JSONObject = parser.getJSONObject(i)
+                    ids.add(item.getInt("id"))
+                    positions.add(item.getInt("position"))
+                    nicknames.add(item.getString("nickname"))
+                    codes.add(item.getString("flag").subSequence(5, 7).toString().uppercase())
+                    countries.add(item.getString("country"))
+                    won.add(item.getInt("winnedGames"))
+                    played.add(item.getInt("playedGames"))
+                    hasImages.add(item.getBoolean("hasImage"))
+                }
+                val response = RankingResponse(
+                    ids.toList(),
+                    positions.toList(),
+                    nicknames.toList(),
+                    codes.toList(),
+                    countries.toList(),
+                    won.toList(),
+                    played.toList(),
+                    hasImages.toList(),
+                    false
+                )
+                return@withContext response
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext RankingResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), listOf(), true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext RankingResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), listOf(), true)
             }
         }
     }

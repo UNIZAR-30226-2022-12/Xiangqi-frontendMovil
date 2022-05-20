@@ -51,6 +51,11 @@
     <string name="delete_no">No</string>
     <string name="friends_title">Amigos</string>
     <string name="ranking_title">Ranking</string>
+    <string name="ranking_position">Posición</string>
+    <string name="ranking_player">Jugador</string>
+    <string name="ranking_country">País</string>
+    <string name="ranking_played">Partidas\njugadas</string>
+    <string name="ranking_won">Partidas\nganadas</string>
     <string name="store_title">Tienda</string>
     <string name="store_boards">Sets de tableros</string>
     <string name="store_pieces">Sets de piezas</string>
