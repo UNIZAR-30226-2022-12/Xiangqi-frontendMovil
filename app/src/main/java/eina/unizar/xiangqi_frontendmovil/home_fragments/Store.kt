@@ -52,6 +52,7 @@ class Store : Fragment(R.layout.fragment_store) {
             if (response.error) return@launch
             view.findViewById<ShapeableImageView>(R.id.imageViewPoints).visibility = ShapeableImageView.VISIBLE
             view.findViewById<TextView>(R.id.textViewPoints).text = "Número de puntos: $points"
+            view.findViewById<View>(R.id.divider).visibility = View.VISIBLE
             view.findViewById<ScrollView>(R.id.scrollView).visibility = ScrollView.VISIBLE
 
             val boards = view.findViewById<LinearLayout>(R.id.linearLayoutBoards)

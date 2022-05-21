@@ -11,6 +11,9 @@
         android:theme="@style/Theme.XiangqifrontendMovil"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".OtherProfile"
+            android:exported="false"/>
+        <activity
             android:name=".Board"
             android:exported="false"/>
         <activity

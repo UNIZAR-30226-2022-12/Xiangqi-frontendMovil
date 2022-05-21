@@ -17,7 +17,7 @@ class History : Fragment(R.layout.fragment_history) {
 
         MainScope().launch {
             // Retrieve history data
-            val response = HttpHandler.makeProfileRequest(HttpHandler.ProfileRequest(null))
+            val response = HttpHandler.makeHistoryRequest()
             if (!isAdded) return@launch
 
             // Hide loading bar and fill text fields

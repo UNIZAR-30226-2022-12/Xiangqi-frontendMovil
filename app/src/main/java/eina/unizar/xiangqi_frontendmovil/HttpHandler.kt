@@ -58,6 +58,7 @@ object HttpHandler {
     data class RankingResponse(val ids: List<Int>, val positions: List<Int>, val nicknames: List<String>,
                                val codes: List<String>, val countries: List<String>, val won: List<Int>,
                                val played: List<Int>, val hasImages: List<Boolean>, val error: Boolean)
+    data class HistoryResponse(val success: Boolean, val error: Boolean)
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
     private var token = ""
@@ -580,6 +581,56 @@ object HttpHandler {
                 // Url not found
                 return@withContext RankingResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
                     listOf(), listOf(), listOf(), true)
+            }
+        }
+    }
+
+    // TODO: request placeholder
+    suspend fun makeHistoryRequest(): HistoryResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getHistorial").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
+                Log.d("HTTP", parser.toString())
+                return@withContext HistoryResponse(true, false)
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext HistoryResponse(false, true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext HistoryResponse(false, true)
+            }
+        }
+    }
+
+    // TODO: request placeholder
+    suspend fun makeSkinRequest(): HistoryResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getUserSkinList").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
+                Log.d("HTTP", parser.toString())
+                return@withContext HistoryResponse(true, false)
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext HistoryResponse(false, true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext HistoryResponse(false, true)
             }
         }
     }

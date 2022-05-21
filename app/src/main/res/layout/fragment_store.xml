@@ -58,16 +58,25 @@
         app:layout_constraintTop_toTopOf="@+id/imageViewPoints"
         tools:text="@string/profile_points"/>
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/neutral_70"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/imageViewPoints"
+        tools:visibility="visible"/>
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPoints"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         tools:visibility="visible">
 
         <LinearLayout
@@ -78,6 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/store_boards"
@@ -94,10 +104,10 @@
                     android:id="@+id/linearLayoutBoards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/store_boards"
                     android:orientation="horizontal"
                     android:paddingStart="20dp"
-                    android:paddingEnd="15dp"
-                    android:contentDescription="@string/store_boards"/>
+                    android:paddingEnd="15dp"/>
             </HorizontalScrollView>
 
             <TextView
@@ -121,10 +131,10 @@
                     android:id="@+id/linearLayoutPieces"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/store_pieces"
                     android:orientation="horizontal"
                     android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:contentDescription="@string/store_pieces"/>
+                    android:paddingEnd="20dp"/>
             </HorizontalScrollView>
 
         </LinearLayout>

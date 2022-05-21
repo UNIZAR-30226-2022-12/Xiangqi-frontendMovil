@@ -98,7 +98,7 @@ class Profile : Fragment(R.layout.fragment_profile) {
 
             view.findViewById<ImageView>(R.id.imageViewRanking).visibility = ImageView.VISIBLE
             view.findViewById<TextView>(R.id.textViewRankingTitle).visibility = TextView.VISIBLE
-            view.findViewById<TextView>(R.id.textViewRanking).text = "Puesto ${response.points}"
+            view.findViewById<TextView>(R.id.textViewRanking).text = "Puesto ${response.ranking+1}"
 
             view.findViewById<ImageView>(R.id.imageViewCalendar).visibility = ImageView.VISIBLE
             view.findViewById<TextView>(R.id.textViewCalendarTitle).visibility = TextView.VISIBLE
@@ -106,7 +106,7 @@ class Profile : Fragment(R.layout.fragment_profile) {
 
             view.findViewById<ImageView>(R.id.imageViewFriends).visibility = ImageView.VISIBLE
             view.findViewById<TextView>(R.id.textViewFriendsTitle).visibility = TextView.VISIBLE
-            view.findViewById<TextView>(R.id.textViewFriends).text = "${response.points} amigos"
+            view.findViewById<TextView>(R.id.textViewFriends).text = "${response.friends} amigos"
 
             // Set winrate progress bar data
             val winrate = view.findViewById<ProgressBar>(R.id.progressBarWinrate)

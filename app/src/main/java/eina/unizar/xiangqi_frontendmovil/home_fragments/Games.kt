@@ -11,6 +11,7 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import eina.unizar.xiangqi_frontendmovil.Board
 import eina.unizar.xiangqi_frontendmovil.HttpHandler
+import eina.unizar.xiangqi_frontendmovil.OtherProfile
 import eina.unizar.xiangqi_frontendmovil.R
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -84,7 +85,6 @@ class Games : Fragment(R.layout.fragment_games) {
             for (i in 0 until response.ids.size) {
                 val layout = layoutInflater.inflate(R.layout.games_row, table)
                 val row = table[i+rowOffset]
-                row.findViewById<TextView>(R.id.textViewOpponent).text = response.nicknames[i]
                 row.findViewById<TextView>(R.id.textViewStartDate).text = response.startDates[i]
                 row.findViewById<TextView>(R.id.textViewLastMovDate).text = response.lastMovDates[i]
 
@@ -94,6 +94,15 @@ class Games : Fragment(R.layout.fragment_games) {
                 val secondChar = Character.codePointAt(response.codes[i], 1) - asciiOffset + flagOffset
                 row.findViewById<TextView>(R.id.textViewCountry).text = String(Character.toChars(firstChar)) +
                         String(Character.toChars(secondChar)) + " " + response.countries[i]
+
+                val nickname = row.findViewById<TextView>(R.id.textViewOpponent)
+                nickname.text = response.nicknames[i]
+                nickname.setOnClickListener {
+                    val intent = Intent(requireContext(), OtherProfile::class.java)
+                    intent.putExtra("id", response.ids[i])
+                    intent.putExtra("nickname", response.nicknames[i])
+                    callback.launch(intent)
+                }
 
                 if (response.myTurns[i])
                     row.findViewById<ImageView>(R.id.imageViewMove).setImageDrawable(
