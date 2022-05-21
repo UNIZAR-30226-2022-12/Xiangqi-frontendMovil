@@ -58,6 +58,10 @@ object HttpHandler {
     data class RankingResponse(val ids: List<Int>, val positions: List<Int>, val nicknames: List<String>,
                                val codes: List<String>, val countries: List<String>, val won: List<Int>,
                                val played: List<Int>, val hasImages: List<Boolean>, val error: Boolean)
+    data class FriendRequestsResponse(val ids: List<Int>, val nicknames: List<String>, val realnames: List<String>,
+                                      val codes: List<String>, val countries: List<String>, val birthdates: List<String>,
+                                      val hasImages: List<Boolean>, val error: Boolean)
+    data class FriendsResponse(val success: Boolean, val error: Boolean)
     data class HistoryResponse(val success: Boolean, val error: Boolean)
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
@@ -581,6 +585,84 @@ object HttpHandler {
                 // Url not found
                 return@withContext RankingResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
                     listOf(), listOf(), listOf(), true)
+            }
+        }
+    }
+
+    suspend fun makeFriendRequestsRequest(): FriendRequestsResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getFriendRequests").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
+                val ids = mutableListOf<Int>()
+                val nicknames = mutableListOf<String>()
+                val realnames = mutableListOf<String>()
+                val codes = mutableListOf<String>()
+                val countries = mutableListOf<String>()
+                val birthdates = mutableListOf<String>()
+                val hasImages = mutableListOf<Boolean>()
+                for (i in 0 until parser.length()) {
+                    val item: JSONObject = parser.getJSONObject(i)
+                    ids.add(item.getInt("id"))
+                    nicknames.add(item.getString("nickname"))
+                    realnames.add(item.getString("name"))
+                    codes.add(item.getString("flag").subSequence(5, 7).toString().uppercase())
+                    countries.add(item.getString("country"))
+                    birthdates.add(item.getString("birthday"))
+                    hasImages.add(item.getBoolean("hasImage"))
+                }
+                val response = FriendRequestsResponse(
+                    ids.toList(),
+                    nicknames.toList(),
+                    realnames.toList(),
+                    codes.toList(),
+                    countries.toList(),
+                    birthdates.toList(),
+                    hasImages.toList(),
+                    false
+                )
+                return@withContext response
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext FriendRequestsResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext FriendRequestsResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), true)
+            }
+        }
+    }
+
+
+    // TODO: request placeholder
+    suspend fun makeFriendsRequest(): FriendsResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getFriends").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
+                Log.d("HTTP", parser.toString())
+                return@withContext FriendsResponse(true, false)
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext FriendsResponse(false, true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext FriendsResponse(false, true)
             }
         }
     }

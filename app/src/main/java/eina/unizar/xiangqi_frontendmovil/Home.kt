@@ -50,6 +50,9 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         menuItem.isChecked = true
         refresh = false
         replaceFragment()
+
+        // Init socket connection
+        //SocketHandler.connect()
     }
 
     override fun onBackPressed() {

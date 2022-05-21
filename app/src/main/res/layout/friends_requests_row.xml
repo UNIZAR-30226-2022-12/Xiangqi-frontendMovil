@@ -7,12 +7,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_width="391dp"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageViewOpponent"
+            android:id="@+id/imageViewUser"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
@@ -23,14 +23,14 @@
             app:strokeWidth="1dp"/>
 
         <LinearLayout
-            android:layout_width="115dp"
+            android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textViewOpponent"
+                android:id="@+id/textViewUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
@@ -53,23 +53,23 @@
             android:background="@color/neutral_95"/>
 
         <LinearLayout
-            android:layout_width="107dp"
+            android:layout_width="84dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textViewStartDate"
+                android:id="@+id/textViewName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:textAlignment="center"
                 android:textSize="12sp"
-                tools:text="10/05/2022"/>
+                tools:text="android test long"/>
 
             <TextView
-                android:id="@+id/textViewLastMovDate"
+                android:id="@+id/textViewBirthdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
@@ -84,23 +84,24 @@
             android:background="@color/neutral_95"/>
 
         <ImageView
-            android:id="@+id/imageViewMove"
+            android:id="@+id/imageViewAccept"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:padding="7dp"
+            app:srcCompat="@drawable/ic_baseline_check_circle_outline_40"/>
+
+        <ImageView
+            android:id="@+id/imageViewReject"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:padding="7dp"
             app:srcCompat="@drawable/ic_outline_cancel_40"/>
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="78dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="2dp"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:text="@string/games_continue"
-            android:textSize="11sp"/>
 
     </LinearLayout>
 

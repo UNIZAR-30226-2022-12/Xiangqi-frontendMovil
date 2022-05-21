@@ -50,6 +50,16 @@
     <string name="delete_yes">Si</string>
     <string name="delete_no">No</string>
     <string name="friends_title">Amigos</string>
+    <string name="friends_requests_title">Solicitudes de amistad</string>
+    <string name="friends_requests_user">Usuario</string>
+    <string name="friends_requests_name">Nombre</string>
+    <string name="friends_requests_country">País</string>
+    <string name="friends_requests_birthdate">Fecha de\nnacimiento</string>
+    <string name="friends_requests_accept">Aceptar</string>
+    <string name="friends_requests_reject">Rechazar</string>
+    <string name="friends_requests_not_found">No se han encontrado solicitudes de amistad</string>
+    <string name="friends_table_title">Mis amigos</string>
+    <string name="friends_table_not_found">No se han encontrado amigos</string>
     <string name="ranking_title">Ranking</string>
     <string name="ranking_position">Posición</string>
     <string name="ranking_player">Jugador</string>

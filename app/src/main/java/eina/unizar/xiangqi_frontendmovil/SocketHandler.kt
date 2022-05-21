@@ -22,8 +22,11 @@ object SocketHandler {
         socket = IO.socket("http://ec2-3-82-235-243.compute-1.amazonaws.com:3005")
     }
 
-    fun searchRandomOpponent() {
+    fun connect() {
         socket.connect()
+    }
+
+    fun searchRandomOpponent() {
         socket.emit("searchRandomOpponent", JSONObject("{id:${HttpHandler.id}}"))
     }
 
@@ -32,5 +35,10 @@ object SocketHandler {
             socket.emit("cancelSearch", JSONObject("{id:${HttpHandler.id}}"))
             socket.disconnect()
         }
+    }
+
+    fun sendFriendRequest() {
+        socket.emit("sendFriendRequest", JSONObject("{\"id\":${HttpHandler.id}, " +
+                "\"idFriend\":31}"))
     }
 }
