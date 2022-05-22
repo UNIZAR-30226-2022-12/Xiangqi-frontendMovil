@@ -1,6 +1,5 @@
 package eina.unizar.xiangqi_frontendmovil
 
-import android.util.Log
 import io.socket.client.IO
 import io.socket.client.Socket
 import okhttp3.OkHttpClient
@@ -24,6 +23,11 @@ object SocketHandler {
 
     fun connect() {
         socket.connect()
+        socket.emit("enter", JSONObject("{id:\"${HttpHandler.id}\"}"))
+    }
+
+    fun disconnect() {
+        socket.disconnect()
     }
 
     fun searchRandomOpponent() {
@@ -37,8 +41,8 @@ object SocketHandler {
         }
     }
 
-    fun sendFriendRequest() {
+    fun sendFriendRequest(id: Int) {
         socket.emit("sendFriendRequest", JSONObject("{\"id\":${HttpHandler.id}, " +
-                "\"idFriend\":31}"))
+                "\"idFriend\":$id}"))
     }
 }

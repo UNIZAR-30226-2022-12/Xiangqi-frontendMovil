@@ -98,7 +98,7 @@ class Profile : Fragment(R.layout.fragment_profile) {
 
             view.findViewById<ImageView>(R.id.imageViewRanking).visibility = ImageView.VISIBLE
             view.findViewById<TextView>(R.id.textViewRankingTitle).visibility = TextView.VISIBLE
-            view.findViewById<TextView>(R.id.textViewRanking).text = "Puesto ${response.ranking+1}"
+            view.findViewById<TextView>(R.id.textViewRanking).text = "Puesto ${response.ranking}"
 
             view.findViewById<ImageView>(R.id.imageViewCalendar).visibility = ImageView.VISIBLE
             view.findViewById<TextView>(R.id.textViewCalendarTitle).visibility = TextView.VISIBLE

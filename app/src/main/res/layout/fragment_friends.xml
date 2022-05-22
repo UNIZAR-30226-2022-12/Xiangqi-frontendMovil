@@ -34,6 +34,21 @@
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
         tools:visibility="gone"/>
 
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/friends_search"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"/>
+
     <TextView
         android:id="@+id/textViewFriendRequestsHeader"
         android:layout_width="wrap_content"
@@ -44,7 +59,7 @@
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/linearLayoutFriendRequestsHeader"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSearch"
         tools:visibility="visible"/>
 
     <LinearLayout
@@ -174,32 +189,25 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutFriendRequestsHeader"
         tools:visibility="visible"/>
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
+        android:id="@+id/linearLayoutRequestsTable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/ranking_title"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@+id/linearLayoutFriendRequestsHeader"
         app:layout_constraintStart_toStartOf="@+id/linearLayoutFriendRequestsHeader"
         app:layout_constraintTop_toBottomOf="@+id/divider">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutRequestsTable"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textViewFriendsRequestsNotFound"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textViewFriendsRequestsNotFound"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/friends_requests_not_found"
-                android:textSize="15sp"
-                android:visibility="gone"
-                tools:visibility="visible"/>
-        </LinearLayout>
-    </ScrollView>
+            android:padding="5dp"
+            android:text="@string/friends_requests_not_found"
+            android:textSize="15sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewFriendsHeader"
@@ -210,151 +218,29 @@
         android:textSize="21sp"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/linearLayoutFriendsHeader"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
+        app:layout_constraintStart_toStartOf="@+id/linearLayoutFriendRequestsHeader"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutRequestsTable"
         tools:visibility="visible"/>
 
-    <LinearLayout
-        android:id="@+id/linearLayoutFriendsHeader"
+    <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:background="@color/neutral_95"
-        android:orientation="horizontal"
-        android:visibility="gone"
+        android:contentDescription="@string/friends_table_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewFriendsHeader"
-        tools:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@id/textViewFriendsHeader">
 
         <LinearLayout
-            android:layout_width="146dp"
+            android:id="@+id/linearLayoutFriends"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/friends_requests_user"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/neutral_70"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/friends_requests_country"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/neutral_70"/>
-
-        <LinearLayout
-            android:layout_width="84dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/friends_requests_name"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/neutral_70"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/friends_requests_birthdate"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/neutral_70"/>
-
-        <TextView
-            android:layout_width="62dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:text="@string/friends_requests_accept"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/neutral_70"/>
-
-        <TextView
-            android:layout_width="73dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:text="@string/friends_requests_reject"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="@color/neutral_70"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayoutFriendRequestsHeader"
-        app:layout_constraintStart_toStartOf="@+id/linearLayoutFriendRequestsHeader"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutFriendsHeader"
-        tools:visibility="visible"/>
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/ranking_title"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayoutFriendRequestsHeader"
-        app:layout_constraintStart_toStartOf="@+id/linearLayoutFriendRequestsHeader"
-        app:layout_constraintTop_toBottomOf="@+id/divider2">
-
-        <LinearLayout
-            android:id="@+id/linearLayoutFriendsTable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewFriendsHeader">
 
             <TextView
                 android:id="@+id/textViewFriendsNotFound"
@@ -365,8 +251,10 @@
                 android:textSize="15sp"
                 android:visibility="gone"
                 tools:visibility="visible"/>
+
         </LinearLayout>
-    </ScrollView>
+
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

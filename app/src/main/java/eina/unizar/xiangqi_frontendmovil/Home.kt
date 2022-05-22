@@ -1,5 +1,7 @@
 package eina.unizar.xiangqi_frontendmovil
 
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -16,10 +18,15 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
     lateinit var drawerLayout: DrawerLayout
     private var selected = 0
     private var refresh = false
+    private lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        // Construct exit dialog
+        dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_exit)
 
         // Link ActionBar to drawerLayout
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -52,14 +59,14 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         replaceFragment()
 
         // Init socket connection
-        //SocketHandler.connect()
+        SocketHandler.connect()
     }
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            dialog.show()
         }
     }
 
@@ -115,5 +122,17 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
             .beginTransaction()
             .replace(R.id.home_content, fragment!!)
             .commit()
+    }
+
+    fun onClickCancel(view: View) {
+        dialog.hide()
+    }
+
+    fun onClickExit(view: View) {
+        SocketHandler.disconnect()
+        val intent = Intent(this, SignIn::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

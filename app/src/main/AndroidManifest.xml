@@ -11,6 +11,9 @@
         android:theme="@style/Theme.XiangqifrontendMovil"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SearchFriends"
+            android:exported="false"/>
+        <activity
             android:name=".OtherProfile"
             android:exported="false"/>
         <activity

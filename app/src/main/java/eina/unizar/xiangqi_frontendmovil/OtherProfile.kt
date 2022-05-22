@@ -58,7 +58,7 @@ class OtherProfile : AppCompatActivity() {
 
             findViewById<ImageView>(R.id.imageViewRanking).visibility = ImageView.VISIBLE
             findViewById<TextView>(R.id.textViewRankingTitle).visibility = TextView.VISIBLE
-            findViewById<TextView>(R.id.textViewRanking).text = "Puesto ${response.ranking+1}"
+            findViewById<TextView>(R.id.textViewRanking).text = "Puesto ${response.ranking}"
 
             findViewById<ImageView>(R.id.imageViewCalendar).visibility = ImageView.VISIBLE
             findViewById<TextView>(R.id.textViewCalendarTitle).visibility = TextView.VISIBLE

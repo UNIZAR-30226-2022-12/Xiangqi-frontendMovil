@@ -50,6 +50,7 @@
     <string name="delete_yes">Si</string>
     <string name="delete_no">No</string>
     <string name="friends_title">Amigos</string>
+    <string name="friends_search">Buscar amigos</string>
     <string name="friends_requests_title">Solicitudes de amistad</string>
     <string name="friends_requests_user">Usuario</string>
     <string name="friends_requests_name">Nombre</string>
@@ -60,6 +61,9 @@
     <string name="friends_requests_not_found">No se han encontrado solicitudes de amistad</string>
     <string name="friends_table_title">Mis amigos</string>
     <string name="friends_table_not_found">No se han encontrado amigos</string>
+    <string name="friends_visit_profile">Ver perfil</string>
+    <string name="search_send">Enviar solicitud</string>
+    <string name="search_sent">Solicitud enviada</string>
     <string name="ranking_title">Ranking</string>
     <string name="ranking_position">Posición</string>
     <string name="ranking_player">Jugador</string>
@@ -70,4 +74,6 @@
     <string name="store_boards">Sets de tableros</string>
     <string name="store_pieces">Sets de piezas</string>
     <string name="history_title">Historial</string>
+    <string name="exit_title">Cerrar sesión</string>
+    <string name="exit_body">¿Estas seguro de que quieres cerrar sesión?</string>
 </resources>

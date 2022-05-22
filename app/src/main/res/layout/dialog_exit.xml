@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".Home">
 
     <TextView
-        android:id="@+id/textViewDeleteTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewExitTitle"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/delete_title"
+        android:text="@string/exit_title"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,35 +21,37 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/textViewDeleteBody"
+        android:id="@+id/textViewExitBody"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/delete_body"
+        android:text="@string/exit_body"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewDeleteTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewDeleteTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeleteTitle"/>
+        app:layout_constraintEnd_toEndOf="@+id/textViewExitTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewExitTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExitTitle"/>
 
     <Button
-        android:id="@+id/buttonDeleteNo"
+        android:id="@+id/buttonExitNo"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:onClick="onClickCancel"
         android:text="@string/delete_no"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textViewDeleteTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeleteBody"/>
+        app:layout_constraintEnd_toEndOf="@+id/textViewExitTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExitBody"/>
 
     <Button
-        android:id="@+id/buttonDeleteYes"
+        android:id="@+id/buttonExitYes"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="10dp"
         android:text="@string/delete_yes"
         android:textColor="?android:colorPrimary"
         android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDeleteNo"
-        app:layout_constraintTop_toTopOf="@+id/buttonDeleteNo"/>
+        android:onClick="onClickExit"
+        app:layout_constraintEnd_toStartOf="@+id/buttonExitNo"
+        app:layout_constraintTop_toTopOf="@+id/buttonExitNo"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
