@@ -21,8 +21,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class Games : Fragment(R.layout.fragment_games) {
-    private lateinit var dialog: Dialog
+    lateinit var dialog: Dialog
     private var friendGame = false
+    private var friendPos = 0
     private val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         dialog.hide()
         parentFragmentManager
@@ -38,8 +39,10 @@ class Games : Fragment(R.layout.fragment_games) {
         dialog = object : Dialog(requireContext()) {
             override fun onDetachedFromWindow() {
                 super.onDetachedFromWindow()
-                if (!dialog.findViewById<Button>(R.id.buttonGameStart).isEnabled) cancelSearch()
-                findViewById<SwitchCompat>(R.id.switchFriend).isChecked = false
+                if (isAdded) {
+                    if (!dialog.findViewById<Button>(R.id.buttonGameStart).isEnabled) cancelSearch()
+                    findViewById<SwitchCompat>(R.id.switchFriend).isChecked = false
+                }
             }
         }
         dialog.setContentView(R.layout.dialog_new_game)
@@ -48,8 +51,8 @@ class Games : Fragment(R.layout.fragment_games) {
             checkFriendGame(isChecked)
         }
 
-        dialog.findViewById<TextInputLayout>(R.id.editTextFriend)
-            .editText?.addTextChangedListener(object : TextWatcher {
+        val friends = dialog.findViewById<TextInputLayout>(R.id.editTextFriend).editText!!
+        friends.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {}
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -60,6 +63,9 @@ class Games : Fragment(R.layout.fragment_games) {
                     button.isEnabled = true
                 }
             })
+        (friends as AutoCompleteTextView).setOnItemClickListener { _, _, i, _ ->
+            friendPos = i
+        }
 
         dialog.findViewById<Button>(R.id.buttonGameStart).setOnClickListener {
             startSearch()
@@ -73,13 +79,6 @@ class Games : Fragment(R.layout.fragment_games) {
             dialog.show()
             SocketHandler.refreshFriends()
         }
-
-        // Set listener for opponent found
-        /*SocketHandler.socket.once("startGame") {
-            Log.d("Games", it[0].toString())
-            val i = Intent(activity, Board::class.java)
-            callback.launch(i)
-        }*/
 
         MainScope().launch {
             // Retrieve profile data
@@ -217,11 +216,12 @@ class Games : Fragment(R.layout.fragment_games) {
         }
         else {
             start.text = "Conectando con ${friends.editText?.text}"
+            SocketHandler.sendGameRequest(friendPos, requireActivity(), this, callback)
         }
         Log.d("Games", "start")
     }
 
-    private fun cancelSearch() {
+    fun cancelSearch() {
         // Cancel opponent search
         dialog.findViewById<SwitchCompat>(R.id.switchSync).isEnabled = true
         dialog.findViewById<SwitchCompat>(R.id.switchFriend).isEnabled = true
@@ -247,10 +247,11 @@ class Games : Fragment(R.layout.fragment_games) {
         start.isEnabled = true
         if (friends.editText?.text.toString() == "") {
             start.text = getText(R.string.games_start)
-            //SocketHandler.cancelSearch()
+            SocketHandler.cancelRandom()
         }
         else {
             start.text = "Nueva partida contra ${friends.editText?.text.toString()}"
+            SocketHandler.cancelRequest()
         }
     }
 }
