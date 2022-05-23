@@ -59,7 +59,7 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         replaceFragment()
 
         // Init socket connection
-        SocketHandler.connect()
+        SocketHandler.connect(this)
     }
 
     override fun onBackPressed() {

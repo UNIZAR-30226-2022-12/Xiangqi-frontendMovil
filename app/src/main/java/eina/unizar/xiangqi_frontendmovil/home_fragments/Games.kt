@@ -3,21 +3,26 @@ package eina.unizar.xiangqi_frontendmovil.home_fragments
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import eina.unizar.xiangqi_frontendmovil.Board
-import eina.unizar.xiangqi_frontendmovil.HttpHandler
-import eina.unizar.xiangqi_frontendmovil.OtherProfile
-import eina.unizar.xiangqi_frontendmovil.R
+import com.google.android.material.textfield.TextInputLayout
+import eina.unizar.xiangqi_frontendmovil.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class Games : Fragment(R.layout.fragment_games) {
     private lateinit var dialog: Dialog
+    private var friendGame = false
     private val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         dialog.hide()
         parentFragmentManager
@@ -33,24 +38,41 @@ class Games : Fragment(R.layout.fragment_games) {
         dialog = object : Dialog(requireContext()) {
             override fun onDetachedFromWindow() {
                 super.onDetachedFromWindow()
-                val button = findViewById<Button>(R.id.buttonGameStart)
-                button.isEnabled = true
-                button.text = getText(R.string.games_start)
+                if (!dialog.findViewById<Button>(R.id.buttonGameStart).isEnabled) cancelSearch()
+                findViewById<SwitchCompat>(R.id.switchFriend).isChecked = false
             }
         }
         dialog.setContentView(R.layout.dialog_new_game)
-        dialog.findViewById<Button>(R.id.buttonGameStart).setOnClickListener {
-            // Begin opponent search
-            val button = dialog.findViewById<Button>(R.id.buttonGameStart)
-            button.isEnabled = false
-            button.text = getText(R.string.games_searching)
-            //SocketHandler.searchRandomOpponent()
-            // Launch intent (debug only)
-            val i = Intent(activity, Board::class.java)
-            callback.launch(i)
+
+        dialog.findViewById<SwitchCompat>(R.id.switchFriend).setOnCheckedChangeListener { _, isChecked ->
+            checkFriendGame(isChecked)
         }
 
-        view.findViewById<Button>(R.id.buttonNewGame).setOnClickListener { dialog.show() }
+        dialog.findViewById<TextInputLayout>(R.id.editTextFriend)
+            .editText?.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {}
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val button = dialog.findViewById<Button>(R.id.buttonGameStart)
+                    button.text = "Nueva partida contra $s"
+                    button.isEnabled = true
+                }
+            })
+
+        dialog.findViewById<Button>(R.id.buttonGameStart).setOnClickListener {
+            startSearch()
+        }
+
+        dialog.findViewById<Button>(R.id.buttonGameCancel).setOnClickListener {
+            cancelSearch()
+        }
+
+        view.findViewById<Button>(R.id.buttonNewGame).setOnClickListener {
+            dialog.show()
+            SocketHandler.refreshFriends()
+        }
 
         // Set listener for opponent found
         /*SocketHandler.socket.once("startGame") {
@@ -122,6 +144,113 @@ class Games : Fragment(R.layout.fragment_games) {
                     table[i+rowOffset].findViewById<ImageView>(R.id.imageViewOpponent).setImageDrawable(image)
                 }
             }
+        }
+    }
+
+    private fun checkFriendGame(isChecked: Boolean) {
+        if (isChecked) {
+            friendGame = true
+            val spinner = dialog.findViewById<TextInputLayout>(R.id.editTextFriend)
+            spinner.visibility = View.VISIBLE
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, SocketHandler.getOnlineFriends())
+            (spinner.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+            val constraintLayout = dialog.findViewById<ConstraintLayout>(R.id.parentLayout)
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(constraintLayout)
+            constraintSet.connect(
+                R.id.buttonGameStart,
+                ConstraintSet.TOP,
+                R.id.editTextFriend,
+                ConstraintSet.BOTTOM,
+                10
+            )
+            constraintSet.applyTo(constraintLayout)
+            val button = dialog.findViewById<Button>(R.id.buttonGameStart)
+            button.text = resources.getText(R.string.games_select_friend_button)
+            button.isEnabled = false
+        }
+        else {
+            friendGame = false
+            val spinner = dialog.findViewById<TextInputLayout>(R.id.editTextFriend)
+            spinner.visibility = TextInputLayout.GONE
+            spinner.editText?.setText("")
+            val constraintLayout = dialog.findViewById<ConstraintLayout>(R.id.parentLayout)
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(constraintLayout)
+            constraintSet.connect(
+                R.id.buttonGameStart,
+                ConstraintSet.TOP,
+                R.id.switchFriend,
+                ConstraintSet.BOTTOM,
+                10
+            )
+            constraintSet.applyTo(constraintLayout)
+            val button = dialog.findViewById<Button>(R.id.buttonGameStart)
+            button.text = resources.getText(R.string.games_start)
+            button.isEnabled = true
+        }
+    }
+
+    private fun startSearch() {
+        // Begin opponent search
+        dialog.findViewById<SwitchCompat>(R.id.switchSync).isEnabled = false
+        dialog.findViewById<SwitchCompat>(R.id.switchFriend).isEnabled = false
+        val friends = dialog.findViewById<TextInputLayout>(R.id.editTextFriend)
+        friends.isEnabled = false
+        dialog.findViewById<ProgressBar>(R.id.progressBarConnecting).visibility = ProgressBar.VISIBLE
+        dialog.findViewById<Button>(R.id.buttonGameCancel).visibility = Button.VISIBLE
+
+        val constraintLayout = dialog.findViewById<ConstraintLayout>(R.id.parentLayout)
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+        constraintSet.clear(
+            R.id.buttonGameStart,
+            ConstraintSet.BOTTOM,
+        )
+        constraintSet.applyTo(constraintLayout)
+
+        val start = dialog.findViewById<Button>(R.id.buttonGameStart)
+        start.isEnabled = false
+        if (friends.editText?.text.toString() == "") {
+            start.text = getText(R.string.games_searching)
+            SocketHandler.searchRandomOpponent(requireActivity(), callback)
+        }
+        else {
+            start.text = "Conectando con ${friends.editText?.text}"
+        }
+        Log.d("Games", "start")
+    }
+
+    private fun cancelSearch() {
+        // Cancel opponent search
+        dialog.findViewById<SwitchCompat>(R.id.switchSync).isEnabled = true
+        dialog.findViewById<SwitchCompat>(R.id.switchFriend).isEnabled = true
+        val friends = dialog.findViewById<TextInputLayout>(R.id.editTextFriend)
+        friends.isEnabled = true
+        dialog.findViewById<ProgressBar>(R.id.progressBarConnecting).visibility = ProgressBar.GONE
+        dialog.findViewById<Button>(R.id.buttonGameCancel).visibility = Button.GONE
+
+
+        val constraintLayout = dialog.findViewById<ConstraintLayout>(R.id.parentLayout)
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+        constraintSet.connect(
+            R.id.buttonGameStart,
+            ConstraintSet.BOTTOM,
+            R.id.parentLayout,
+            ConstraintSet.BOTTOM,
+            20
+        )
+        constraintSet.applyTo(constraintLayout)
+
+        val start = dialog.findViewById<Button>(R.id.buttonGameStart)
+        start.isEnabled = true
+        if (friends.editText?.text.toString() == "") {
+            start.text = getText(R.string.games_start)
+            //SocketHandler.cancelSearch()
+        }
+        else {
+            start.text = "Nueva partida contra ${friends.editText?.text.toString()}"
         }
     }
 }

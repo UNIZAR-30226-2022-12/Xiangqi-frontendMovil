@@ -33,8 +33,11 @@
     <string name="games_continue">Continuar</string>
     <string name="games_sync">Partida con temporizador</string>
     <string name="games_friend">Partida contra un amigo conectado</string>
-    <string name="games_start">Comenzar partida</string>
+    <string name="games_select_friend">Selecciona un amigo</string>
+    <string name="games_select_friend_button">Por favor seleccione un amigo de su lista</string>
+    <string name="games_start">Nueva partida aleatoria</string>
     <string name="games_searching">Buscando oponente</string>
+    <string name="games_cancel">Cancelar partida</string>
     <string name="profile_title">Perfil</string>
     <string name="profile_birthdate">Fecha de nacimiento:</string>
     <string name="profile_points">Número de puntos:</string>
