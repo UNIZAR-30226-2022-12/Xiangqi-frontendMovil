@@ -189,7 +189,6 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
         android:contentDescription="@string/ranking_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/linearLayoutHeader"
@@ -200,6 +199,7 @@
             android:id="@+id/linearLayoutTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
             android:orientation="vertical">
 
             <TextView

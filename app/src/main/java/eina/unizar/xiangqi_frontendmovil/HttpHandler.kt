@@ -72,7 +72,10 @@ object HttpHandler {
     data class AcceptResponse(val success: Boolean, val error: Boolean)
     data class RejectRequest(val id: Int)
     data class RejectResponse(val success: Boolean, val error: Boolean)
-    data class HistoryResponse(val success: Boolean, val error: Boolean)
+    data class HistoryResponse(val keys: List<Int>, val dates: List<String>, val hours: List<String>,
+                               val winners: List<String>, val ids: List<List<Int>>, val nicknames: List<List<String>>,
+                               val codes: List<List<String>>, val colors: List<List<String>>,
+                               val origins: List<List<String>>, val destinations: List<List<String>>, val error: Boolean)
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
     private var token = ""
@@ -550,6 +553,7 @@ object HttpHandler {
                 val conn: HttpURLConnection = URL("$base_url/do-getRanking").openConnection() as HttpURLConnection
                 conn.requestMethod = "GET"
                 conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
                 conn.connectTimeout = 5000
                 conn.connect()
                 val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
@@ -809,7 +813,6 @@ object HttpHandler {
         }
     }
 
-    // TODO: request placeholder
     suspend fun makeHistoryRequest(): HistoryResponse {
         return withContext(Dispatchers.IO) {
             try {
@@ -820,22 +823,82 @@ object HttpHandler {
                 conn.connectTimeout = 5000
                 conn.connect()
                 val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
-                Log.d("HTTP", parser.toString())
-                return@withContext HistoryResponse(true, false)
+                val keys = mutableListOf<Int>()
+                val dates = mutableListOf<String>()
+                val hours = mutableListOf<String>()
+                val winners = mutableListOf<String>()
+                val ids = mutableListOf<List<Int>>()
+                val id = mutableListOf<Int>()
+                val nicknames = mutableListOf<List<String>>()
+                val nickname = mutableListOf<String>()
+                val codes = mutableListOf<List<String>>()
+                val code = mutableListOf<String>()
+                val colors = mutableListOf<List<String>>()
+                val color = mutableListOf<String>()
+                val origins = mutableListOf<List<String>>()
+                val origin = mutableListOf<String>()
+                val destinations = mutableListOf<List<String>>()
+                val destination = mutableListOf<String>()
+                for (i in 0 until parser.length()) {
+                    val item: JSONObject = parser.getJSONObject(i)
+                    val data: JSONObject = item.getJSONObject("data")
+                    val moves: JSONArray = item.getJSONArray("children")
+                    keys.add(item.getInt("key"))
+                    dates.add(data.getString("date"))
+                    hours.add(data.getString("hour"))
+                    winners.add(data.getString("winnerNickname"))
+                    id.clear()
+                    nickname.clear()
+                    code.clear()
+                    color.clear()
+                    origin.clear()
+                    destination.clear()
+                    for(j in 0 until moves.length()) {
+                        val move: JSONObject = moves.getJSONObject(j).getJSONObject("data")
+                        id.add(move.getInt("id"))
+                        nickname.add(move.getString("nickname"))
+                        code.add(move.getString("flag").subSequence(5, 7).toString().uppercase())
+                        color.add(move.getString("color"))
+                        origin.add(move.getString("origin"))
+                        destination.add(move.getString("destination"))
+                    }
+                    ids.add(id.toList())
+                    nicknames.add(nickname.toList())
+                    codes.add(code.toList())
+                    colors.add(color.toList())
+                    origins.add(origin.toList())
+                    destinations.add(destination.toList())
+                }
+                val response = HistoryResponse(
+                    keys.toList(),
+                    dates.toList(),
+                    hours.toList(),
+                    winners.toList(),
+                    ids.toList(),
+                    nicknames.toList(),
+                    codes.toList(),
+                    colors.toList(),
+                    origins.toList(),
+                    destinations.toList(),
+                    false
+                )
+                return@withContext response
             }
             catch (e: SocketTimeoutException) {
                 // Timeout msg
-                return@withContext HistoryResponse(false, true)
+                return@withContext HistoryResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), listOf(), listOf(), listOf(), true)
             }
             catch (e: IOException) {
                 // Url not found
-                return@withContext HistoryResponse(false, true)
+                return@withContext HistoryResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
+                    listOf(), listOf(), listOf(), listOf(), listOf(), true)
             }
         }
     }
 
     // TODO: request placeholder
-    suspend fun makeSkinRequest(): HistoryResponse {
+    suspend fun makeSkinRequest(): RejectResponse {
         return withContext(Dispatchers.IO) {
             try {
                 val conn: HttpURLConnection = URL("$base_url/do-getUserSkinList").openConnection() as HttpURLConnection
@@ -846,15 +909,15 @@ object HttpHandler {
                 conn.connect()
                 val parser = JSONArray(BufferedReader(conn.inputStream.reader()).readText())
                 Log.d("HTTP", parser.toString())
-                return@withContext HistoryResponse(true, false)
+                return@withContext RejectResponse(true, false)
             }
             catch (e: SocketTimeoutException) {
                 // Timeout msg
-                return@withContext HistoryResponse(false, true)
+                return@withContext RejectResponse(false, true)
             }
             catch (e: IOException) {
                 // Url not found
-                return@withContext HistoryResponse(false, true)
+                return@withContext RejectResponse(false, true)
             }
         }
     }

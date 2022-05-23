@@ -74,6 +74,15 @@
     <string name="store_boards">Sets de tableros</string>
     <string name="store_pieces">Sets de piezas</string>
     <string name="history_title">Historial</string>
+    <string name="history_date">Fecha de\npartida</string>
+    <string name="history_hour">Hora</string>
+    <string name="history_winner">Ganador</string>
+    <string name="history_moves">Nº movs</string>
+    <string name="history_review">Revisar partida</string>
+    <string name="review_mov">Mov</string>
+    <string name="review_color">Color</string>
+    <string name="review_origin">Origen</string>
+    <string name="review_destination">Destino</string>
     <string name="exit_title">Cerrar sesión</string>
     <string name="exit_body">¿Estas seguro de que quieres cerrar sesión?</string>
 </resources>

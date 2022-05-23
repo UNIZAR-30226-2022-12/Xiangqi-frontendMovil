@@ -29,4 +29,137 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
         tools:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/neutral_95"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text="@string/history_date"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/neutral_70"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text="@string/history_hour"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/neutral_70"/>
+
+        <TextView
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:text="@string/history_winner"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/neutral_70"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:text="@string/history_moves"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/neutral_70"/>
+
+        <TextView
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:text="@string/history_review"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/neutral_70"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayoutHeader"
+        app:layout_constraintStart_toStartOf="@+id/linearLayoutHeader"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutHeader"
+        tools:visibility="visible"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/ranking_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayoutHeader"
+        app:layout_constraintStart_toStartOf="@+id/linearLayoutHeader"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewGamesNotFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/games_row"
+                android:textSize="15sp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

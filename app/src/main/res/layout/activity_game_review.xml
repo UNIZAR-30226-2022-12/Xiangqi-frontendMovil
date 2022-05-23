@@ -1,34 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".home_fragments.Ranking">
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="150dp"
-        android:indeterminateTint="?android:colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone"/>
-
-    <TextView
-        android:id="@+id/textViewLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/home_loading"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        tools:visibility="gone"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/linearLayoutHeader"
@@ -39,18 +13,16 @@
         android:layout_marginEnd="20dp"
         android:background="@color/neutral_95"
         android:orientation="horizontal"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="73dp"
+            android:layout_width="62dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dp"
-            android:text="@string/ranking_position"
+            android:text="@string/review_mov"
             android:textAlignment="center"
             android:textSize="15sp"
             android:textStyle="bold"/>
@@ -61,7 +33,7 @@
             android:background="@color/neutral_70"/>
 
         <LinearLayout
-            android:layout_width="146dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -85,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="5dp"
-                android:text="@string/ranking_country"
+                android:text="@string/games_country"
                 android:textAlignment="center"
                 android:textSize="15sp"
                 android:textStyle="bold"/>
@@ -98,11 +70,11 @@
             android:background="@color/neutral_70"/>
 
         <TextView
-            android:layout_width="73dp"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dp"
-            android:text="@string/ranking_played"
+            android:text="@string/review_color"
             android:textAlignment="center"
             android:textSize="15sp"
             android:textStyle="bold"/>
@@ -112,15 +84,37 @@
             android:layout_height="match_parent"
             android:background="@color/neutral_70"/>
 
-        <TextView
-            android:layout_width="73dp"
+        <LinearLayout
+            android:layout_width="96dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:text="@string/ranking_won"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text="@string/review_origin"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/neutral_70"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text="@string/review_destination"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -129,11 +123,9 @@
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:background="@color/neutral_70"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/linearLayoutHeader"
         app:layout_constraintStart_toStartOf="@+id/linearLayoutHeader"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutHeader"
-        tools:visibility="visible"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutHeader"/>
 
     <ScrollView
         android:layout_width="0dp"
