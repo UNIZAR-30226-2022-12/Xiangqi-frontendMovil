@@ -8,18 +8,18 @@ class PieceBoard {
 
     var finnish = false
     var turnoDe = Color.ROJO
-    var tablero = Vector<Piece>()
-    var canyons = Vector<Piece>()
+    var tablero = arrayOfNulls<Piece>(90)
     lateinit var generalRojo : Piece
     lateinit var generalNegro :Piece
 
 
-    init{ generarPiezas() }
+    init{ generarPiezas()
+        for (p in tablero) p!!.update()}
 
     private fun generarPiezas(){
 
         //rellenar con piezas nulas el tablero
-        for (i in 0..89) addPiece(NullPiece(Coordinates(i%10, i/9),this))
+        for (i in 0..89) addPiece(NullPiece(Coordinates(i/9, i%9),this))
 
         //generar generales
         generalRojo = General(Coordinates(0,4), this, Color.ROJO)
@@ -52,14 +52,13 @@ class PieceBoard {
         addPiece(Torre(Coordinates(9,8),this,Color.NEGRO))
 
         //generar canyones
-        canyons.add(Canyon(Coordinates(2,1),this, Color.ROJO))
-        canyons.add(Canyon(Coordinates(2,7),this, Color.ROJO))
-        canyons.add(Canyon(Coordinates(7,1),this, Color.ROJO))
-        canyons.add(Canyon(Coordinates(7,7),this, Color.ROJO))
-        for (c in canyons) addPiece(c)
+        addPiece(Canyon(Coordinates(2,1),this, Color.ROJO))
+        addPiece(Canyon(Coordinates(2,7),this, Color.ROJO))
+        addPiece(Canyon(Coordinates(7,1),this, Color.NEGRO))
+        addPiece(Canyon(Coordinates(7,7),this, Color.NEGRO))
 
         //generar peones
-        for ( col in 1..9 step 2){
+        for ( col in 0..8 step 2){
             addPiece(Soldado(Coordinates(3,col),this,Color.ROJO))
             addPiece(Soldado(Coordinates(6,col),this,Color.NEGRO))
         }
@@ -67,7 +66,7 @@ class PieceBoard {
     }
     fun checkCheckMate(color: Color): Boolean{
         for(p in tablero)
-            if(p.getColor() == color)
+            if(p!!.getColor() == color)
                 for (cood in p.getMoves()){
                     if(p.canMove(cood)){
                         return false
@@ -79,8 +78,8 @@ class PieceBoard {
     fun checkCheck(color :Color) : Boolean{
         val atackedPositions = Vector<Coordinates>()
         for (p in tablero)
-            if(p.getColor() != color)
-                atackedPositions.addAll(p.getUpdateMoves())
+            if(p!!.getColor() != color)
+                atackedPositions.addAll(p!!.getUpdateMoves())
         if (color == Color.NEGRO)
             return atackedPositions.contains(generalNegro.getPos())
         if (color == Color.ROJO)
@@ -89,26 +88,50 @@ class PieceBoard {
     }
 
     fun update(){
-        for (p in tablero) p.update()
+        for (p in tablero) p!!.update()
         if (turnoDe == Color.ROJO) turnoDe = Color.NEGRO
         else turnoDe = Color.ROJO
     }
 
-    fun getMoves(from : Coordinates) : List<Coordinates> = tablero[from.columna + from.fila * 10].getMoves()
+    fun getMoves(from : Coordinates) : List<Coordinates> {
+        if(tablero[from.columna + from.fila * 9]!!.getColor() != turnoDe) return  listOf()
+        return tablero[from.columna + from.fila * 9]!!.getMoves()
+    }
 
     fun move(from : Coordinates, to : Coordinates) : Boolean {
-        if(tablero[from.columna + from.fila * 10].getColor() == turnoDe){
-            return  tablero[from.columna + from.fila * 10].moveTo(to)
+        if(tablero[from.columna + from.fila * 9]!!.getColor() == turnoDe){
+            return  tablero[from.columna + from.fila * 9]!!.moveTo(to)
         }
         return false
     }
 
     fun addPiece(pieza : Piece){
         val pos = pieza.getPos()
-        tablero[pos.columna + pos.fila * 10] = pieza
+        tablero[pos.columna + pos.fila * 9] = pieza
     }
 
-    fun getPiece(from :Coordinates) = tablero[from.columna + from.fila * 10]
+    fun getPiece(from :Coordinates): Piece {
+        if(from.columna < 0 || from.columna > 8 || from.fila < 0 || from.fila > 9)
+            return OutPiece(from, this)
+        return tablero[from.columna + from.fila * 9]!!
+    }
+
+    fun getSide(from : Coordinates) : Color {
+        if (from.fila <= 4){
+            return Color.ROJO
+        }
+        if (from.fila >= 5){
+            return Color.NEGRO
+        }
+        return Color.FUERA
+    }
+
+    fun inPalace(from : Coordinates, color : Color) : Boolean{
+        if (from.columna < 3 || from.columna > 5 ) return false
+        if (from.fila < 3 && color == Color.ROJO) return true
+        if (from.fila > 6 && color == Color.NEGRO) return true
+        return false
+    }
 
     override fun toString(): String {
         return "hi"

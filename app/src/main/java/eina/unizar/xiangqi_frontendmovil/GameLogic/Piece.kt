@@ -8,17 +8,19 @@ interface Piece {
     fun update()
     fun getColor() : Color
     fun getUpdateMoves() : List<Coordinates>
-}
+    fun getImgName(skin: Int) : String?
+ }
 
 enum class Color {
-    ROJO, NEGRO, VACIO,
+    ROJO, NEGRO, VACIO, FUERA,
 }
 
-abstract class PieceImpl (private var pos : Coordinates, val board : PieceBoard, private val col : Color ): Piece {
-    lateinit var mov : List<Coordinates>
+abstract class PieceImpl (private var pos : Coordinates, val board : PieceBoard, private var col : Color ): Piece {
+    var mov : List<Coordinates> = listOf()
     override fun getMoves(): List<Coordinates> {
         return mov
     }
+
     override fun getPos(): Coordinates {
        return pos
     }

@@ -6,4 +6,802 @@
     android:layout_height="match_parent"
     tools:context=".Board">
 
+
+    <TableLayout
+            android:layout_width="405dp"
+            android:layout_height="450dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="1dp"
+            app:layout_constraintVertical_bias="0.51"
+            android:background="@drawable/skin_board_1"
+            android:id="@+id/board">
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila9">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell09"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell19"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell29"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell39"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell49"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell59"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell69"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell79"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell89"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila8">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell08"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell18"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell28"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell38"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell48"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell58"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell68"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell78"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell88"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila7">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell07"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell17"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell27"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell37"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell47"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell57"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell67"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell77"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell87"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila6">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell06"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell16"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell26"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell36"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell46"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell56"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell66"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell76"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell86"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila5">
+
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell05"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell15"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell25"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell35"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell45"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell55"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell65"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell75"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell85"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila4">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell04"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell14"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell24"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell34"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell44"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell54"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell64"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell74"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell84"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila3">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell03"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell13"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell23"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell33"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell43"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell53"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell63"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell73"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell83"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila2">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell02"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell12"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell22"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell32"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell42"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell52"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell62"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell72"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell82"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila1">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell01"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell11"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell21"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell31"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell41"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell51"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell61"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell71"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell81"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fila0">
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell00"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell10"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell20"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell30"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell40"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell50"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell60"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell70"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:srcCompat="@drawable/ic_baseline_add_40"
+                    android:id="@+id/cell80"
+                    android:contentDescription="@string/app_name"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+        </TableRow>
+
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -88,6 +88,7 @@ class SignIn : AppCompatActivity() {
     }
 
     fun onClickLogin(view: View) {
+
         // Validate data
         if (!checkFormData()) return
 

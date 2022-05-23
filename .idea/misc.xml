@@ -5,44 +5,50 @@
       <map>
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_baseline_cake_24.xml" value="0.2985" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_baseline_monetization_on_40.xml" value="0.2985" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_baseline_people_alt_40.xml" value="0.2985" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_launcher_background.xml" value="0.173" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_board.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_edit_profile.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_friend.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_game_review.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_home.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_other_profile.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_profile.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_search_friends.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_signin.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_signup.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_delete_account.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_eula.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_exit.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_forgotten_pass.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_new_game.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/firends_requests_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_delete_account.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_eula.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_forgotten_pass.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_friends.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_games.xml" value="0.33" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_history.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_profile.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_ranking.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_spinner.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_store.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/friends_item.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/friends_requests_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/games_row.xml" value="0.33" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/history_row.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/ranking_row.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/review_row.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/search_row.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/store_item.xml" value="0.5" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/menu/activity_home_navigation_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/menu/android_home_navigation_drawer.xml" value="2.5142857142857142" />
+        <entry key="app/src/main/res/drawable/caballonegro1.xml" value="0.1925" />
+        <entry key="app/src/main/res/drawable/caballorojo1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/canyonnegro1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/canyonrojo1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/elefantenegro1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/elefanterojo1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/generalnegro1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/generalrojo1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/oficialnegro1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/oficialrojo1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/soldadonegro1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/soldadorojo1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/torrenegro1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/torrerojo1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/torrerojopista1.xml" value="0.138" />
+        <entry key="app/src/main/res/layout/activity_board.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.1082427536231884" />
+        <entry key="app/src/main/res/layout/activity_game_review.xml" value="0.1082427536231884" />
+        <entry key="app/src/main/res/layout/fragment_games.xml" value="0.1082427536231884" />
+        <entry key="app/src/main/res/layout/games_row.xml" value="0.10869565217391304" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1605" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_black_round.xml" value="0.1605" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_new.xml" value="0.1605" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_new_round.xml" value="0.1605" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1605" />
       </map>
     </option>
   </component>

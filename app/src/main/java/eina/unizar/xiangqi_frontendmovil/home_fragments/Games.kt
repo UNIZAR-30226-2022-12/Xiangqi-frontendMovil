@@ -81,6 +81,7 @@ class Games : Fragment(R.layout.fragment_games) {
             callback.launch(i)
         }*/
 
+
         MainScope().launch {
             // Retrieve profile data
             val response = HttpHandler.makeGamesRequest(HttpHandler.GamesRequest(null))
