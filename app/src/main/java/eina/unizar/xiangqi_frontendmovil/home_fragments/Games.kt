@@ -21,8 +21,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class Games : Fragment(R.layout.fragment_games) {
-    private lateinit var dialog: Dialog
+    lateinit var dialog: Dialog
     private var friendGame = false
+    private var friendPos = 0
     private val callback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         dialog.hide()
         parentFragmentManager
@@ -80,7 +81,6 @@ class Games : Fragment(R.layout.fragment_games) {
             val i = Intent(activity, Board::class.java)
             callback.launch(i)
         }*/
-
 
         MainScope().launch {
             // Retrieve profile data

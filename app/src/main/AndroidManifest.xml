@@ -11,6 +11,10 @@
         android:theme="@style/Theme.XiangqifrontendMovil"
         android:usesCleartextTraffic="true">
         <activity
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:name=".DialogActivity"
+            android:exported="false"/>
+        <activity
             android:name=".GameReview"
             android:exported="false"/>
         <activity

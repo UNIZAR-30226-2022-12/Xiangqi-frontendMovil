@@ -76,6 +76,8 @@ object HttpHandler {
                                val winners: List<String>, val ids: List<List<Int>>, val nicknames: List<List<String>>,
                                val codes: List<List<String>>, val colors: List<List<String>>,
                                val origins: List<List<String>>, val destinations: List<List<String>>, val error: Boolean)
+    data class NicknameRequest(val id: Int)
+    data class NicknameResponse(val nickname: String, val error: Boolean)
 
     private const val base_url = "http://ec2-3-82-235-243.compute-1.amazonaws.com:3000"
     private var token = ""
@@ -893,6 +895,29 @@ object HttpHandler {
                 // Url not found
                 return@withContext HistoryResponse(listOf(), listOf(), listOf(), listOf(), listOf(),
                     listOf(), listOf(), listOf(), listOf(), listOf(), true)
+            }
+        }
+    }
+
+    suspend fun makeNicknameRequest(request: NicknameRequest): NicknameResponse {
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn: HttpURLConnection = URL("$base_url/do-getNickname/${request.id}").openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                conn.setRequestProperty("Content-Type", "application/json; utf-8")
+                conn.setRequestProperty("x-access-token", token)
+                conn.connectTimeout = 5000
+                conn.connect()
+                val response = BufferedReader(conn.inputStream.reader()).readText()
+                return@withContext NicknameResponse(response, false)
+            }
+            catch (e: SocketTimeoutException) {
+                // Timeout msg
+                return@withContext NicknameResponse("", true)
+            }
+            catch (e: IOException) {
+                // Url not found
+                return@withContext NicknameResponse("", true)
             }
         }
     }

@@ -6,8 +6,12 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.Fragment
+import eina.unizar.xiangqi_frontendmovil.home_fragments.Games
 import io.socket.client.IO
 import io.socket.client.Socket
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.json.JSONArray
 import org.json.JSONObject
@@ -17,6 +21,8 @@ import java.util.concurrent.TimeUnit
 object SocketHandler {
     val socket: Socket
     lateinit var onlineFriends: JSONArray
+    var opponentId: Int = 0
+    var roomId: Int = 0
 
     init {
         val okHttpClient: OkHttpClient = OkHttpClient.Builder()
@@ -36,6 +42,16 @@ object SocketHandler {
         socket.on("friendRequest") {
             (context as Activity).runOnUiThread {
                 Toast.makeText(context, "Has recibido una solicitud de amistad", Toast.LENGTH_SHORT).show()
+            }
+        }
+        socket.on("gameRequest") {
+            opponentId = (it[0] as JSONObject).getInt("id")
+            roomId = (it[0] as JSONObject).getString("idSala").toInt()
+            MainScope().launch {
+                val nickname = HttpHandler.makeNicknameRequest(HttpHandler.NicknameRequest(opponentId)).nickname
+                (context as Activity).runOnUiThread {
+                    context.startActivity(Intent(context, DialogActivity::class.java).putExtra("nickname", nickname))
+                }
             }
         }
         socket.connect()
@@ -59,20 +75,61 @@ object SocketHandler {
         return friends.toList()
     }
 
-    fun searchRandomOpponent(context: Context, callback: ActivityResultLauncher<Intent>) {
-        socket.once("startGame") {
-            callback.launch(Intent(context, Board::class.java))
-        }
-        socket.emit("searchRandomOpponent", JSONObject("{id:${HttpHandler.id}}"))
-    }
-
-    fun cancelSearch() {
-        socket.off("startGame")
-        socket.emit("cancelSearch", JSONObject("{id:${HttpHandler.id}}"))
-    }
-
     fun sendFriendRequest(id: Int) {
         socket.emit("sendFriendRequest", JSONObject("{\"id\":${HttpHandler.id}, " +
                 "\"idFriend\":$id}"))
+    }
+
+    fun searchRandomOpponent(context: Context, callback: ActivityResultLauncher<Intent>) {
+        socket.once("startGame") {
+            socket.off("gameRequest")
+            callback.launch(Intent(context, Board::class.java))
+        }
+        socket.emit("searchRandomOpponent", JSONObject("{\"id\":\"${HttpHandler.id}\"}"))
+    }
+
+    fun cancelRandom() {
+        socket.off("startGame")
+        socket.emit("cancelGameRandom", JSONObject("{\"id\":\"${HttpHandler.id}\"}"))
+    }
+
+    fun sendGameRequest(pos: Int, context: Context, fragment: Fragment, callback: ActivityResultLauncher<Intent>) {
+        socket.once("rejectReq") {
+            socket.off("startGame")
+            (context as Activity).runOnUiThread {
+                (fragment as Games).cancelSearch()
+                Toast.makeText(context,
+                    "${onlineFriends.getJSONObject(pos).getString("nickname")} ha rechazado tu invitación",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+        socket.once("startGame") {
+            socket.off("rejectReq")
+            socket.off("gameRequest")
+            callback.launch(Intent(context, Board::class.java))
+        }
+        socket.emit("sendGameRequest", JSONObject("{\"id\":\"${HttpHandler.id}\", " +
+                "\"idFriend\":${onlineFriends.getJSONObject(pos).getInt("id")}}"))
+    }
+
+    fun cancelRequest() {
+        socket.off("startGame")
+        socket.off("rejectReq")
+        socket.emit("cancelGameRequest", JSONObject("{\"id\":\"${HttpHandler.id}\"}"))
+    }
+
+    fun rejectReq() {
+        socket.emit("rejectReq", JSONObject("{\"id\":\"$opponentId\"}"))
+        socket.emit("cancelGameRequest", JSONObject("{\"id\":\"$opponentId\"}"))
+    }
+
+    fun acceptReq(context: Context) {
+        socket.once("startGame") {
+            socket.off("gameRequest")
+            context.startActivity(Intent(context, Board::class.java))
+        }
+        socket.emit("acceptReq", JSONObject("{\"id\":\"${HttpHandler.id}\", " +
+                "\"idFriend\":\"$opponentId\", " +
+                "\"idSala\":\"$roomId\"}"))
     }
 }

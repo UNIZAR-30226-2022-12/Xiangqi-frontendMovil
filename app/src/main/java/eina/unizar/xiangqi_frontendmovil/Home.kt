@@ -18,15 +18,15 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
     lateinit var drawerLayout: DrawerLayout
     private var selected = 0
     private var refresh = false
-    private lateinit var dialog: Dialog
+    private lateinit var exitDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         // Construct exit dialog
-        dialog = Dialog(this)
-        dialog.setContentView(R.layout.dialog_exit)
+        exitDialog = Dialog(this)
+        exitDialog.setContentView(R.layout.dialog_exit)
 
         // Link ActionBar to drawerLayout
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -66,7 +66,7 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            dialog.show()
+            exitDialog.show()
         }
     }
 
@@ -125,7 +125,7 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
     }
 
     fun onClickCancel(view: View) {
-        dialog.hide()
+        exitDialog.hide()
     }
 
     fun onClickExit(view: View) {
