@@ -35,6 +35,8 @@ class Games : Fragment(R.layout.fragment_games) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val i = Intent(activity, Board::class.java)
+        callback.launch(i)
         // Construct new game dialog
         dialog = object : Dialog(requireContext()) {
             override fun onDetachedFromWindow() {

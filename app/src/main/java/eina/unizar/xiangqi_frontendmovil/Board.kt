@@ -59,8 +59,8 @@ class Board : AppCompatActivity() {
                 hideMoves()
                 if (moves.contains(click)){
                     if(movePiece(lastClick,click)) {
-                        estado = State.WAITING_OPONENT
-                        disableButtons()
+                        estado = State.INIT
+                        //disableButtons()
                         drawBoard()
 
                     }

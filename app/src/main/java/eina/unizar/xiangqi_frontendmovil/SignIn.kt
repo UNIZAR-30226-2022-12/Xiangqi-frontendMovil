@@ -108,6 +108,9 @@ class SignIn : AppCompatActivity() {
 
         val context = this  // Save activity context to launch intents
 
+        val i = Intent(context, Home::class.java)
+        startActivity(i)
+        finish()
         // Send HTTP login request
         val request = HttpHandler.LoginRequest(email.editText?.text.toString(),
             password.editText?.text.toString())
