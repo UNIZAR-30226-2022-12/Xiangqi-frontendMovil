@@ -222,7 +222,7 @@ class Games : Fragment(R.layout.fragment_games) {
         Log.d("Games", "start")
     }
 
-    private fun cancelSearch() {
+    fun cancelSearch() {
         // Cancel opponent search
         dialog.findViewById<SwitchCompat>(R.id.switchSync).isEnabled = true
         dialog.findViewById<SwitchCompat>(R.id.switchFriend).isEnabled = true
