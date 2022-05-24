@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
+import eina.unizar.xiangqi_frontendmovil.GameLogic.Coordinates
 import eina.unizar.xiangqi_frontendmovil.home_fragments.Games
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -132,4 +133,11 @@ object SocketHandler {
                 "\"idFriend\":\"$opponentId\", " +
                 "\"idSala\":\"$roomId\"}"))
     }
+
+    /*
+    fun sendMove(from: Coordinates, to:Coordinates) {
+        socket.emit("doMov" ,JSONObject("{\"id\":${HttpHandler.id}, " +
+                "\"mov\": [$from]")
+    }
+     */
 }
