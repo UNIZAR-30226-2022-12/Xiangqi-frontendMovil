@@ -59,7 +59,8 @@ class Home : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         replaceFragment()
 
         // Init socket connection
-        SocketHandler.connect(this)
+        if (intent.getBooleanExtra("fromGame", false)) SocketHandler.enableRequests(this)
+        else SocketHandler.connect(this)
     }
 
     override fun onBackPressed() {

@@ -44,6 +44,17 @@ object SocketHandler {
                 Toast.makeText(context, "Has recibido una solicitud de amistad", Toast.LENGTH_SHORT).show()
             }
         }
+        enableRequests(context)
+        socket.connect()
+        socket.emit("enter", JSONObject("{id:\"${HttpHandler.id}\"}"))
+        refreshFriends()
+    }
+
+    fun disconnect() {
+        socket.disconnect()
+    }
+
+    fun enableRequests(context: Context) {
         socket.on("gameRequest") {
             opponentId = (it[0] as JSONObject).getInt("id")
             roomId = (it[0] as JSONObject).getString("idSala").toInt()
@@ -54,13 +65,10 @@ object SocketHandler {
                 }
             }
         }
-        socket.connect()
-        socket.emit("enter", JSONObject("{id:\"${HttpHandler.id}\"}"))
-        refreshFriends()
     }
 
-    fun disconnect() {
-        socket.disconnect()
+    fun disableRequests() {
+        socket.off("gameRequest")
     }
 
     fun refreshFriends() {
@@ -83,7 +91,11 @@ object SocketHandler {
     fun searchRandomOpponent(context: Context, callback: ActivityResultLauncher<Intent>) {
         socket.once("startGame") {
             socket.off("gameRequest")
-            callback.launch(Intent(context, Board::class.java))
+            val intent = Intent(context, Board::class.java)
+            intent.putExtra("roomId", (it[0] as JSONObject).getInt("idSala"))
+            intent.putExtra("opponentId", (it[0] as JSONObject).getInt("idOponent"))
+            intent.putExtra("red", (it[0] as JSONObject).getBoolean("rojo"))
+            callback.launch(intent)
         }
         socket.emit("searchRandomOpponent", JSONObject("{\"id\":\"${HttpHandler.id}\"}"))
     }
@@ -106,7 +118,11 @@ object SocketHandler {
         socket.once("startGame") {
             socket.off("rejectReq")
             socket.off("gameRequest")
-            callback.launch(Intent(context, Board::class.java))
+            val intent = Intent(context, Board::class.java)
+            intent.putExtra("roomId", (it[0] as JSONObject).getInt("idSala"))
+            intent.putExtra("opponentId", (it[0] as JSONObject).getInt("idOponent"))
+            intent.putExtra("red", (it[0] as JSONObject).getBoolean("rojo"))
+            callback.launch(intent)
         }
         socket.emit("sendGameRequest", JSONObject("{\"id\":\"${HttpHandler.id}\", " +
                 "\"idFriend\":${onlineFriends.getJSONObject(pos).getInt("id")}}"))
@@ -126,10 +142,56 @@ object SocketHandler {
     fun acceptReq(context: Context) {
         socket.once("startGame") {
             socket.off("gameRequest")
-            context.startActivity(Intent(context, Board::class.java))
+            val intent = Intent(context, Board::class.java)
+            intent.putExtra("roomId", (it[0] as JSONObject).getInt("idSala"))
+            intent.putExtra("opponentId", (it[0] as JSONObject).getInt("idOponent"))
+            intent.putExtra("red", (it[0] as JSONObject).getBoolean("rojo"))
+            context.startActivity(intent)
         }
         socket.emit("acceptReq", JSONObject("{\"id\":\"${HttpHandler.id}\", " +
                 "\"idFriend\":\"$opponentId\", " +
                 "\"idSala\":\"$roomId\"}"))
+    }
+
+    fun enterRoom(roomId: Int, board: Board) {
+        socket.on("my msg") {
+            board.runOnUiThread {
+                board.newMsg(it[0].toString(), false)
+            }
+        }
+        socket.on("opMov") {
+            board.runOnUiThread {
+                board.newMove((it[0] as JSONObject).getString("mov"), false)
+            }
+        }
+        socket.on("win") {
+            board.runOnUiThread {
+                board.winGameDialog.show()
+            }
+        }
+        socket.emit("enterRoom", JSONObject("{\"id\":\"$roomId\"}"))
+    }
+
+    fun leaveRoom(roomId: Int) {
+        socket.off("my msg")
+        socket.off("opMov")
+        socket.emit("leaveRoom", JSONObject("{\"id\":\"$roomId\"}"))
+    }
+
+    fun sendMsg(roomId: Int, msg: String) {
+        socket.emit("sendMsg", JSONObject("{\"id\":\"$roomId\", " +
+                "\"msg\":\"$msg\"}}"))
+    }
+
+    fun doMov(roomId: Int, msg: String, red: Boolean) {
+        val color = if (red) "rojo" else "negro"
+        socket.emit("doMov", JSONObject("{\"id\":\"$roomId\", " +
+                "\"mov\":\"$msg\", " +
+                "\"color\":\"$color\"}"))
+    }
+
+    fun lose(roomId: Int, winnerId: Int) {
+        socket.emit("lose", JSONObject("{\"idSala\":\"$roomId\", " +
+                "\"idGanador\":\"$winnerId\"}}"))
     }
 }

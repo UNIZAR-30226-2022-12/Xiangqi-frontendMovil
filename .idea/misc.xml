@@ -7,7 +7,8 @@
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_baseline_monetization_on_40.xml" value="0.2985" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_baseline_people_alt_40.xml" value="0.2985" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_launcher_background.xml" value="0.173" />
-        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_board.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/drawable/ic_outline_cancel_40.xml" value="0.2985" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_board.xml" value="0.46194225721784776" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_edit_profile.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_friend.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/activity_game_review.xml" value="0.358695652173913" />
@@ -20,9 +21,12 @@
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_delete_account.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_eula.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_exit.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_exit_game.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_finish_game.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_forgotten_pass.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_game_req.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_new_game.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/dialog_win_game.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/firends_requests_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_delete_account.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/fragment_eula.xml" value="0.358695652173913" />
@@ -38,6 +42,8 @@
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/friends_requests_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/games_row.xml" value="0.33" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/history_row.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/message_row.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/message_row_other.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/ranking_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/review_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/jaime/Documents/AndroidStudioProjects/XiangqifrontendMovil/app/src/main/res/layout/search_row.xml" value="0.358695652173913" />

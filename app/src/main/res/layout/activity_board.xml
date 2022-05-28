@@ -1,9 +1,388 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Board">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="150dp"
+            android:indeterminateTint="?android:colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textViewLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/home_loading"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            tools:visibility="gone"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewProfile"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="20dp"
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewRanking"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewNickname"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.NavigationView.Item"
+            app:srcCompat="@drawable/ic_profile"
+            app:strokeColor="@color/cardview_shadow_start_color"
+            app:strokeWidth="1dp"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/textViewNickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewCountry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewNickname"
+            app:layout_constraintStart_toStartOf="@+id/textViewNickname"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNickname"/>
+
+        <TextView
+            android:id="@+id/textViewBirthdateTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/profile_birthdate"
+            android:textSize="18sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/textViewNickname"
+            app:layout_constraintStart_toStartOf="@+id/textViewNickname"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCountry"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/textViewBirthdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewNickname"
+            app:layout_constraintStart_toStartOf="@+id/textViewNickname"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBirthdateTitle"/>
+
+        <TextView
+            android:id="@+id/textViewRanking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:text="Puesto en ranking: 9"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewNickname"
+            app:layout_constraintStart_toStartOf="@+id/textViewNickname"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBirthdate"/>
+
+        <TextView
+            android:id="@+id/textViewChatTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/board_chat"
+            android:textSize="21sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/scrollViewChat"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRanking"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="-1dp"
+            android:layout_marginBottom="-10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollViewChat"
+            app:layout_constraintEnd_toEndOf="@+id/scrollViewChat"
+            app:layout_constraintStart_toStartOf="@+id/scrollViewChat"
+            app:layout_constraintTop_toTopOf="@+id/scrollViewChat"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.LargeComponent"
+            app:strokeColor="@color/cardview_shadow_start_color"
+            app:strokeWidth="1dp"
+            tools:visibility="visible"/>
+
+        <ScrollView
+            android:id="@+id/scrollViewChat"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/board_chat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewChatTitle">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutMessages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+        </ScrollView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextChatMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:visibility="gone"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSend"
+            app:layout_constraintStart_toStartOf="@+id/scrollViewChat"
+            app:layout_constraintTop_toBottomOf="@+id/scrollViewChat"
+            tools:visibility="visible">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_USERNAME"
+                android:hint="@string/board_chat_msg"
+                android:inputType="text"
+                android:textColorHint="#78909C"
+                android:textSize="15sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSend"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="14dp"
+            android:paddingTop="10dp"
+            android:visibility="gone"
+            android:onClick="onClickSendMsg"
+            app:icon="@drawable/ic_baseline_send_40"
+            app:iconGravity="textTop"
+            app:iconSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextChatMsg"
+            app:layout_constraintEnd_toEndOf="@+id/scrollViewChat"
+            app:layout_constraintTop_toTopOf="@+id/editTextChatMsg"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/textViewThemesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/board_themes"
+            android:textSize="21sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/scrollViewChat"
+            app:layout_constraintTop_toBottomOf="@+id/editTextChatMsg"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextThemePieces"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:ems="10"
+            android:visibility="gone"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewThemesTitle"
+            tools:visibility="visible">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/board_themes_pieces"
+                android:inputType="none"
+                android:textColorHint="#78909C"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextThemeBoard"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:ems="10"
+            android:visibility="gone"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextThemePieces"
+            tools:visibility="visible">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/board_themes_board"
+                android:inputType="none"
+                android:textColorHint="#78909C"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewBoard"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextThemeBoard"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Day"
+            app:srcCompat="@drawable/skin_board_1"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewPiece"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextThemeBoard"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Day"
+            app:srcCompat="@drawable/skin_pieces_canyonnegro_1"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/textViewBoardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/board_moves"
+            android:textSize="21sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/scrollViewMoves"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBoard"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageViewFrame"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="-1dp"
+            android:layout_marginBottom="-10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollViewMoves"
+            app:layout_constraintEnd_toEndOf="@+id/scrollViewMoves"
+            app:layout_constraintStart_toStartOf="@+id/scrollViewMoves"
+            app:layout_constraintTop_toTopOf="@+id/scrollViewMoves"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.LargeComponent"
+            app:strokeColor="@color/cardview_shadow_start_color"
+            app:strokeWidth="1dp"
+            tools:visibility="visible"/>
+
+        <ScrollView
+            android:id="@+id/scrollViewMoves"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/board_chat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewBoardTitle">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutMoves"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+        </ScrollView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextMove"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:visibility="gone"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@id/buttonMove"
+            app:layout_constraintStart_toEndOf="@+id/buttonResign"
+            app:layout_constraintTop_toBottomOf="@id/scrollViewMoves"
+            tools:visibility="visible">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints=".AUTOFILL_HINT_USERNAME"
+                android:hint="@string/board_move_msg"
+                android:inputType="text"
+                android:textColorHint="#78909C"
+                android:textSize="15sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonMove"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="14dp"
+            android:paddingTop="10dp"
+            android:visibility="gone"
+            android:onClick="onClickSendMove"
+            app:icon="@drawable/ic_baseline_send_40"
+            app:iconGravity="textTop"
+            app:iconSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@id/editTextMove"
+            app:layout_constraintEnd_toEndOf="@id/scrollViewMoves"
+            app:layout_constraintTop_toTopOf="@id/editTextMove"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonResign"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="14dp"
+            android:paddingTop="10dp"
+            android:visibility="gone"
+            android:onClick="onClickLose"
+            app:icon="@drawable/ic_outline_cancel_40"
+            app:iconGravity="textTop"
+            app:iconSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@id/editTextMove"
+            app:layout_constraintStart_toStartOf="@id/scrollViewMoves"
+            app:layout_constraintTop_toTopOf="@id/editTextMove"
+            tools:visibility="visible"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

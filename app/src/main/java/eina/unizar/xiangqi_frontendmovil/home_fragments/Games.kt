@@ -131,8 +131,13 @@ class Games : Fragment(R.layout.fragment_games) {
                             R.drawable.ic_baseline_check_circle_outline_40, null))
 
                 row.findViewById<Button>(R.id.button).setOnClickListener {
-                    // Debug, integrate when appropriate
-                    Toast.makeText(requireContext(), "Game against ${response.ids[i]}", Toast.LENGTH_SHORT).show()
+                    SocketHandler.disableRequests()
+                    val intent = Intent(requireContext(), Board::class.java)
+                    intent.putExtra("roomId", response.roomIds[i])
+                    intent.putExtra("opponentId", response.ids[i])
+                    intent.putExtra("continue", true)
+                    intent.putExtra("turn", response.myTurns[i])
+                    startActivity(intent)
                 }
             }
 
